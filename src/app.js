@@ -3,6 +3,7 @@ var bodyParser = require('body-parser')
 var compression = require('compression')
 var cors = require('cors')
 var express = require('express')
+var expressValidator = require('express-validator')
 var expressWinston = require('express-winston')
 var helmet = require('helmet')
 var path = require('path')
@@ -42,6 +43,10 @@ app.use(bodyParser.urlencoded({
 
 // body parse / json
 app.use(bodyParser.json())
+
+
+// custom express validatos
+app.use(expressValidator())
 
 // express winston logger
 app.use(expressWinston.logger(function () {
