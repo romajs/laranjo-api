@@ -3,33 +3,30 @@ var routeEventHandlers = {
 }
 
 function MessageRouteEventHandler () {
-
-  this.validate = function(req) {
-    req.checkBody('text', 'required').notEmpty()
+  this.validate = function (req) {
     req.checkBody('space.name', 'required').notEmpty()
+    req.checkBody('message.text', 'required').notEmpty()
     req.checkBody('message.thread.name', 'required').notEmpty()
   }
-  
-  this.buildResponse = function(req, res, next) {
-    var text = 'VO TI DA U SHUTI'
-    var spaceId = req.body.space.name
-    var threadId = req.body.message.thread.name
+
+  this.buildResponse = function (req, res, next) {
+    var text = 'VO TI DA U SHUTI' // FIXME
+    var threadName = req.body.message.thread.name
     return res.json({
       'text': text,
       'thread': {
-         'name': `spaces/${spaceId}/threads/${threadId}`
+        'name': `${threadName}`
       }
     })
   }
-
 }
 
 function routeEventHandler (type) {
-  var routeEventHandler = routeEventHandlers[type]
-  if (routeEventHandler === undefined) {
-    throw new Error(`No routeEventHandler found for ${type}`)
+  var RouteEventHandler = routeEventHandlers[type]
+  if (RouteEventHandler === undefined) {
+    throw new Error(`No RouteEventHandler found for ${type}`)
   }
-  return new routeEventHandler()
+  return new RouteEventHandler()
 }
 
 module.exports = routeEventHandler
