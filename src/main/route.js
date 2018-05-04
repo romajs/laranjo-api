@@ -1,7 +1,7 @@
 var express = require('express')
 var router = express.Router()
 
-var routeEventHandler = rootRequire('routeEventHandler')
+var routeEventHandler = rootRequire('main/routeEventHandler')
 
 // var eventPaylod = {
 //   "type": "MESSAGE",

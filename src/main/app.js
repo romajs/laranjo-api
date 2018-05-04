@@ -9,8 +9,8 @@ var helmet = require('helmet')
 var path = require('path')
 
 // rootRequire
-var config = rootRequire('config')
-var logger = rootRequire('logger')
+var config = rootRequire('main/config')
+var logger = rootRequire('main/logger')
 
 // blocked
 blocked(function (ms) {
@@ -57,7 +57,7 @@ app.use(expressWinston.logger(function () {
 }()))
 
 // route
-app.use('/', rootRequire('route'))
+app.use('/', rootRequire('main/route'))
 
 // error handling
 app.use(function (err, req, res, next) {

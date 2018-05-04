@@ -9,14 +9,14 @@ global.rootRequire = function (name) {
 }
 
 function startServer () {
-  var server = rootRequire('server')
+  var server = rootRequire('main/server')
   return server.start().then(function (servers) {
     return 'Server started successfully @ ' + servers[0]._connectionKey
   })
 }
 
 function stopServer () {
-  var server = rootRequire('server')
+  var server = rootRequire('main/server')
   return server.stop().then(function (servers) {
     return 'Server stoped successfully @ ' + servers[0]._connectionKey
   })
