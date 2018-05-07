@@ -1,5 +1,18 @@
 var routeEventHandlers = {
+  'ADDED_TO_SPACE': AddedToSpadeRouteEventHandler,
   'MESSAGE': MessageRouteEventHandler
+}
+
+function AddedToSpadeRouteEventHandler () {
+  this.validate = function (req) {
+  }
+
+  this.buildResponse = function (req, res, next) {
+    var text = 'VO TI DA U SHUTI'
+    return res.json({
+      'text': text
+    })
+  }
 }
 
 function MessageRouteEventHandler () {
@@ -10,7 +23,7 @@ function MessageRouteEventHandler () {
   }
 
   this.buildResponse = function (req, res, next) {
-    var text = 'VO TI DA U SHUTI' // FIXME
+    var text = req.body.message.text
     var threadName = req.body.message.thread.name
     return res.json({
       'text': text,

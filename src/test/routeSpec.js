@@ -19,6 +19,18 @@ describe('Routing message event requests', function () {
         .expect(400)
         .expect('Content-Type', /application\/json/)
   })
+  it('Should handle added to space event request', function () {
+    return request(app)
+        .post('/')
+        .send({
+          'type': 'ADDED_TO_SPACE'
+        })
+        .expect(200)
+        .expect('Content-Type', /application\/json/)
+        .expect({
+          'text': 'VO TI DA U SHUTI'
+        })
+  })
   it('Should handle message event request', function () {
     return request(app)
         .post('/')
@@ -39,7 +51,7 @@ describe('Routing message event requests', function () {
               'email': 'chriscorgi@example.com'
             },
             'createTime': '2017-03-02T19:02:59.910959Z',
-            'text': 'shuti',
+            'text': 'VO TI DA U SHUTI',
             'thread': {
               'name': 'spaces/AAAAAAAAAAA/threads/BBBBBBBBBBB'
             }
