@@ -23,14 +23,7 @@ function MessageRouteEventHandler () {
   }
 
   this.buildResponse = function (req, res, next) {
-    var text = req.body.message.text
-    var threadName = req.body.message.thread.name
-    return res.json({
-      'text': text,
-      'thread': {
-        'name': `${threadName}`
-      }
-    })
+    return res.download(rootPath('src/resources/img/vo-ti-da-u-shuti.jpg'))
   }
 }
 

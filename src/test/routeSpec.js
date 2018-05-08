@@ -58,12 +58,6 @@ describe('Routing message event requests', function () {
           }
         })
         .expect(200)
-        .expect('Content-Type', /application\/json/)
-        .expect({
-          'text': 'VO TI DA U SHUTI',
-          'thread': {
-            'name': 'spaces/AAAAAAAAAAA/threads/BBBBBBBBBBB'
-          }
-        })
+        .expect('Content-Type', /image\/jpeg/)
   })
 })

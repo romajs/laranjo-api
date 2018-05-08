@@ -2,7 +2,9 @@
 
 var path = require('path')
 
-global.INDEX_DIR = process.cwd()
+global.rootPath = function (path) {
+  return (process.cwd() + '/' + path).replace('//', '/')
+}
 
 global.rootRequire = function (name) {
   return require(path.dirname(__filename) + '/' + name)
