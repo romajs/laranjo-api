@@ -1,5 +1,5 @@
 {
-  "name": "laranjo_api",
+  "name": "laranjo-api",
   "version": "1.0.0",
   "description": "Laranjo API",
   "author": "@romajs",
@@ -7,12 +7,12 @@
   "private": true,
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/romajs/laranjo_api.git"
+    "url": "git+https://github.com/romajs/laranjo-api.git"
   },
   "bugs": {
-    "url": "https://github.com/romajs/laranjo_api/issues"
+    "url": "https://github.com/romajs/laranjo-api/issues"
   },
-  "homepage": "https://github.com/romajs/laranjo_api#readme",
+  "homepage": "https://github.com/romajs/laranjo-api#readme",
   "scripts": {
     "coverage": "istanbul cover _mocha -- ./src/test -R spec",
     "lint": "eslint . --ignore-path .gitignore",

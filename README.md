@@ -1,4 +1,4 @@
-# laranjo_api
+# laranjo-api
 Laranjo API
 
 ## Development
