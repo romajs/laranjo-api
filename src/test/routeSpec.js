@@ -58,6 +58,17 @@ describe('Routing message event requests', function () {
           }
         })
         .expect(200)
-        .expect('Content-Type', /image\/jpeg/)
+        .expect('Content-Type', /application\/json/)
+        // .expect({
+        //   'cards': [{
+        //     'sections': [{
+        //       'widgets': [{
+        //         'image': {
+        //           'imageUrl': 'http://localhost:8000/img/vo-ti-da-u-shuti.jpg'
+        //         }
+        //       }]
+        //     }]
+        //   }]
+        // })
   })
 })

@@ -2,12 +2,12 @@
 
 var path = require('path')
 
-global.rootPath = function (path) {
-  return (process.cwd() + '/' + path).replace('//', '/')
+global.rootPath = function (name) {
+  return (path.dirname(__filename) + '/' + name).replace('//', '/')
 }
 
 global.rootRequire = function (name) {
-  return require(path.dirname(__filename) + '/' + name)
+  return require(rootPath(name))
 }
 
 function startServer () {

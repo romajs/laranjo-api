@@ -23,7 +23,17 @@ function MessageRouteEventHandler () {
   }
 
   this.buildResponse = function (req, res, next) {
-    return res.download(rootPath('src/resources/img/vo-ti-da-u-shuti.jpg'))
+    return res.json({
+      'cards': [{
+        'sections': [{
+          'widgets': [{
+            'image': {
+              'imageUrl': `${req.urlOrigin}/img/vo-ti-da-u-shuti.jpg`
+            }
+          }]
+        }]
+      }]
+    })
   }
 }
 

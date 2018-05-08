@@ -6,6 +6,7 @@ var express = require('express')
 var expressValidator = require('express-validator')
 var expressWinston = require('express-winston')
 var helmet = require('helmet')
+var url = require('url')
 
 // rootRequire
 var config = rootRequire('main/config')
@@ -18,6 +19,13 @@ blocked(function (ms) {
 
 // app
 var app = express()
+
+// static
+app.use(express.static(function () {
+  var staticDirPath = rootPath('resources')
+  logger.debug('staticDirPath:', staticDirPath)
+  return staticDirPath
+}()))
 
 // cors
 app.use(cors())
@@ -46,6 +54,14 @@ app.use(expressWinston.logger(function () {
   configLogger.level = 'info'
   return configLogger
 }()))
+
+app.use(function (req, res, next) {
+  req.urlOrigin = url.format({
+    protocol: req.protocol,
+    host: req.get('host')
+  })
+  next()
+})
 
 // route
 app.use('/', rootRequire('main/route'))
