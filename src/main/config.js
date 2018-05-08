@@ -32,6 +32,10 @@ var profiles = {
     config.http.host = '0.0.0.0'
     config.http.port = 8000
     process.env.NODE_TLS_REJECT_UNAUTHORIZED = '0'
+  },
+  'production': function (config) {
+    config.http.host = '0.0.0.0'
+    config.http.port = process.env.PORT
   }
 }
 
