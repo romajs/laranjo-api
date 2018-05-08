@@ -1,7 +1,6 @@
-require('../index') // FIXME
-
 var request = require('supertest')
-var app = rootRequire('main/app')
+
+var app = require('../src/app')
 
 describe('Routing message event requests', function () {
   it('Should fail to handle unknown event request', function () {

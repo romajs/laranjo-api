@@ -1,7 +1,7 @@
 var express = require('express')
 var router = express.Router()
 
-var routeEventHandler = rootRequire('main/routeEventHandler')
+var routeEventHandler = require('./routeEventHandler')
 
 router.post('/', function (req, res, next) {
   req.checkBody('type', 'required').notEmpty()
