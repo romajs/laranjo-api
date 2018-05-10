@@ -23,17 +23,27 @@ function MessageRouteEventHandler () {
   }
 
   this.buildResponse = function (req, res, next) {
+    var msg = req.body.message.text
+
     return res.json({
       'cards': [{
         'sections': [{
           'widgets': [{
             'image': {
-              'imageUrl': `${req.urlOrigin}/img/vo-ti-da-u-shuti.jpg`
+              'imageUrl': req.urlOrigin + this.fetchImage(msg)
             }
           }]
         }]
       }]
     })
+  }
+
+  this.fetchImage = function (msg) {
+    if (msg === 'gas') {
+      return `/img/o-o-gas.jpg`
+    }
+
+    return `/img/vo-ti-da-u-shuti.jpg`
   }
 }
 
