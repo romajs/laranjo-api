@@ -50,7 +50,7 @@ describe('Routing message event requests', function () {
               'email': 'chriscorgi@example.com'
             },
             'createTime': '2017-03-02T19:02:59.910959Z',
-            'text': 'VO TI DA U SHUTI',
+            'argumentText': 'VO TI DA U SHUTI',
             'thread': {
               'name': 'spaces/AAAAAAAAAAA/threads/BBBBBBBBBBB'
             }

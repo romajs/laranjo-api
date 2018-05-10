@@ -20,12 +20,12 @@ function AddedToSpadeRouteEventHandler () {
 function MessageRouteEventHandler () {
   this.validate = function (req) {
     req.checkBody('space.name', 'required').notEmpty()
-    req.checkBody('message.text', 'required').notEmpty()
+    req.checkBody('message.argumentText', 'required').notEmpty()
     req.checkBody('message.thread.name', 'required').notEmpty()
   }
 
   this.buildResponse = function (req, res, next) {
-    var msg = req.body.message.text
+    var msg = req.body.message.argumentText.trim()
 
     return res.json({
       'cards': [{
