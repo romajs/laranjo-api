@@ -5,8 +5,6 @@ machine:
     America/Sao_Paulo
 
 dependencies:
-  cache_directories:
-    - ./node_modules
   override:
     - npm install
 
