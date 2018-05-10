@@ -7,10 +7,10 @@ var expressValidator = require('express-validator')
 var expressWinston = require('express-winston')
 var helmet = require('helmet')
 var url = require('url')
+var path = require('path')
 
-// rootRequire
-var config = rootRequire('main/config')
-var logger = rootRequire('main/logger')
+var config = require('./config')
+var logger = require('./logger')
 
 // blocked
 blocked(function (ms) {
@@ -22,7 +22,7 @@ var app = express()
 
 // static
 app.use(express.static(function () {
-  var staticDirPath = rootPath('resources')
+  var staticDirPath = path.resolve(`${__dirname}/../static`)
   logger.debug('staticDirPath:', staticDirPath)
   return staticDirPath
 }()))
@@ -64,7 +64,7 @@ app.use(function (req, res, next) {
 })
 
 // route
-app.use('/', rootRequire('main/route'))
+app.use('/', require('./route'))
 
 // error handling
 app.use(function (err, req, res, next) {

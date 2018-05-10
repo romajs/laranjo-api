@@ -14,11 +14,11 @@
   },
   "homepage": "https://github.com/romajs/laranjo-api#readme",
   "scripts": {
-    "coverage": "istanbul cover _mocha -- ./src/test -R spec",
+    "coverage": "istanbul cover _mocha -- -R spec",
     "lint": "eslint . --ignore-path .gitignore",
-    "start": "node ./src/index start-server",
-    "start-dev": "nodemon ./src/index start-server",
-    "test": "mocha ./src/test"
+    "start": "node index start-server",
+    "start-dev": "nodemon index start-server",
+    "test": "mocha"
   },
   "dependencies": {
     "blocked": "^1.2.1",

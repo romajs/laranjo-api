@@ -1,7 +1,7 @@
 // do not change require order (config must be first)
-var config = rootRequire('main/config')
-var logger = rootRequire('main/logger')
-var app = rootRequire('main/app')
+var config = require('./config')
+var logger = require('./logger')
+var app = require('./app')
 
 var httpServer = null
 

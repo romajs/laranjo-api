@@ -1,0 +1,19 @@
+machine:
+  node:
+    version: 6.1.0
+  timezone:
+    America/Sao_Paulo
+
+dependencies:
+  override:
+    - npm install
+
+test:
+  override:
+    - npm run coverage && cp -r ./coverage $CIRCLE_ARTIFACTS
+
+deployment:
+  production:
+    branch: master
+    heroku:
+      appname: laranjo-api

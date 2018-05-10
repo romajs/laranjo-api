@@ -1,6 +1,6 @@
 var winston = require('winston')
 
-var config = rootRequire('main/config')
+var config = require('./config')
 
 var logger = new (winston.Logger)(config.logger)
 
