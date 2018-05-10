@@ -19,7 +19,7 @@ function baseConfig (name) {
           timestamp: true
         })
       ],
-      level: 'debug',
+      level: 'silly',
       exitOnError: false,
       expressFormat: true,
       colorize: true
