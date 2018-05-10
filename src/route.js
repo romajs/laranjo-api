@@ -1,9 +1,11 @@
 var express = require('express')
 var router = express.Router()
 
+var logger = require('./logger')
 var routeEventHandler = require('./routeEventHandler')
 
 router.post('/', function (req, res, next) {
+  logger.silly('Request body:', req.body)
   req.checkBody('type', 'required').notEmpty()
 
   return req.getValidationResult().then(function (result) {
