@@ -12,9 +12,20 @@ API for Google Hangouts Chat Bot contenplating `@Laranjo` memes.
 [![node](https://img.shields.io/badge/node-6.11.0-yellow.svg)](https://nodejs.org/en/blog/release/v6.11.0/)
 [![npm](https://img.shields.io/badge/npm-3.10.10-yellow.svg)](https://github.com/npm/npm/releases/tag/v3.10.10)
 
+## Build
 
-## Development
+```sh
+npm install --dev
+docker-compose build
+```  
+## Run
 
-Build: `npm install --dev`  
-Start: `npm run start-dev` *(with live reload)*  
-URL access: `http://localhost:8000/`  
+```sh
+docker-compose up
+```  
+
+## Access
+
+```
+http://localhost:8000
+```

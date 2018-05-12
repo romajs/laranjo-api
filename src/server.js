@@ -1,7 +1,8 @@
 // do not change require order (config must be first)
 var config = require('./config')
-var logger = require('./logger')
 var app = require('./app')
+var db = require('./db')
+var logger = require('./logger')
 
 var httpServer = null
 
@@ -21,13 +22,15 @@ function startHttpServer () {
 
 function start () {
   return Promise.all([
-    startHttpServer()
+    startHttpServer(),
+    db.connect()
   ])
 }
 
 function stop () {
   return Promise.all([
-    httpServer.close()
+    httpServer.close(),
+    db.disconnect()
   ])
 }
 

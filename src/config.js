@@ -9,8 +9,8 @@ function baseConfig (name) {
       expiresIn: 86400 // expires in 24 hours
     },
     http: {
-      host: '127.0.0.1',
-      port: 8000
+      host: '0.0.0.0',
+      port: process.env.PORT || 8000
     },
     logger: {
       transports: [
@@ -23,19 +23,18 @@ function baseConfig (name) {
       exitOnError: false,
       expressFormat: true,
       colorize: true
+    },
+    mongodb: {
+      url: process.env.MONGODB_URI || 'mongodb://mongodb:27017/laranjo-api'
     }
   }
 }
 
 var profiles = {
   'dev': function (config) {
-    config.http.host = '0.0.0.0'
-    config.http.port = 8000
     process.env.NODE_TLS_REJECT_UNAUTHORIZED = '0'
   },
   'production': function (config) {
-    config.http.host = '0.0.0.0'
-    config.http.port = process.env.PORT
   }
 }
 
