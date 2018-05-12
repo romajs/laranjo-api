@@ -5,6 +5,12 @@ var app = require('../src/app')
 describe('Routing message event requests', function () {
   it('Should fail to handle unknown event request', function () {
     return request(app)
+        .get('/')
+        .expect(200)
+        .expect('VO TI DA U SHUTI')
+  })
+  it('Should fail to handle unknown event request', function () {
+    return request(app)
         .post('/')
         .send({
           'type': 'UNKNOWN'
