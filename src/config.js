@@ -9,8 +9,9 @@ function baseConfig (name) {
       expiresIn: 86400 // expires in 24 hours
     },
     http: {
-      host: '127.0.0.1',
-      port: 8000
+      host: '0.0.0.0',
+      port: process.env.PORT || 8000,
+      baseRoute: process.env.EXPRESS_APP_ROUTE_BASE_ROUTE || '/'
     },
     logger: {
       transports: [
@@ -29,13 +30,9 @@ function baseConfig (name) {
 
 var profiles = {
   'dev': function (config) {
-    config.http.host = '0.0.0.0'
-    config.http.port = 8000
     process.env.NODE_TLS_REJECT_UNAUTHORIZED = '0'
   },
   'production': function (config) {
-    config.http.host = '0.0.0.0'
-    config.http.port = process.env.PORT
   }
 }
 
