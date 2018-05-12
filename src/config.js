@@ -24,6 +24,9 @@ function baseConfig (name) {
       exitOnError: false,
       expressFormat: true,
       colorize: true
+    },
+    mongodb: {
+      url: process.env.MONGODB_URI || 'mongodb://mongodb:27017/laranjo-api'
     }
   }
 }
