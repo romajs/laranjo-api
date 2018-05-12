@@ -14,6 +14,7 @@
   },
   "homepage": "https://github.com/romajs/laranjo-api#readme",
   "scripts": {
+    "codecov": "codecov",
     "coverage": "istanbul cover _mocha -- -R spec",
     "lint": "eslint . --ignore-path .gitignore",
     "start": "node index start-server",
