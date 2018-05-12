@@ -10,7 +10,8 @@ function baseConfig (name) {
     },
     http: {
       host: '0.0.0.0',
-      port: process.env.PORT || 8000
+      port: process.env.PORT || 8000,
+      baseRoute: process.env.EXPRESS_APP_ROUTE_BASE_ROUTE || '/'
     },
     logger: {
       transports: [
