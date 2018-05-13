@@ -77,11 +77,7 @@ app.use(config.http.baseRoute, [
 // error handling
 app.use(function (err, req, res, next) {
   logger.error(err.stack)
-  return res.status(500).send({
-    status: 500,
-    message: 'Internal error',
-    type: 'internal_error'
-  }) || next()
+  return next(err)
 })
 
 module.exports = app

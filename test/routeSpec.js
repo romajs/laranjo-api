@@ -18,7 +18,6 @@ describe('Routing message event requests', function () {
         'type': 'UNKNOWN'
       })
       .expect(500)
-      .expect('Content-Type', /application\/json/)
   })
   it('Should fail to handle event request without type defined', function () {
     return request(app)
@@ -46,7 +45,27 @@ describe('Routing message event requests', function () {
     after(function () {
       findOneStub.restore()
     })
-    it('With attachment found', function () {
+    it('Should failed to validate', function () {
+      return request(app)
+        .post('/')
+        .send({
+          'type': 'MESSAGE'
+        })
+        .expect(400)
+    })
+    it('Should failed to find attachment', function () {
+      findOneStub.rejects()
+      return request(app)
+        .post('/')
+        .send({
+          'type': 'MESSAGE',
+          'message': {
+            'argumentText': 'VO TI DA U SHUTI'
+          }
+        })
+        .expect(500)
+    })
+    it('Should build response with attachment found', function () {
       findOneStub.resolves({
         url: 'http://localhost:8000/image/upload/v0123456789/dm8tdGktZGEtdS1zaHV0aQo='
       })
@@ -72,7 +91,7 @@ describe('Routing message event requests', function () {
           }]
         })
     })
-    it('With no attachment found', function () {
+    it('Should build response with no attachment found', function () {
       findOneStub.resolves(null)
       return request(app)
         .post('/')

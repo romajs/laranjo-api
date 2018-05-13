@@ -22,8 +22,10 @@ describe('Routing upload request', function () {
     })
 
     it('Should find attachments', function () {
+      var attachmentId = mongoose.Types.ObjectId('ATTACHMENTID')
+
       findStub.resolves([{
-        'id': 'MDAwMDAwMDAwMDAwMDAwMQo='
+        'id': attachmentId
       }])
 
       return request(app)
@@ -31,7 +33,7 @@ describe('Routing upload request', function () {
         .expect(200)
         .expect('Content-Type', /application\/json/)
         .expect([{
-          'id': 'MDAwMDAwMDAwMDAwMDAwMQo='
+          'id': '' + attachmentId
         }])
     })
 
@@ -92,10 +94,25 @@ describe('Routing upload request', function () {
         .post('/upload')
         .attach('file', tmpFile.name)
         .expect(500)
-        .expect('Content-Type', /application\/json/)
     })
 
-    it('Should not upload file not attached', function () {
+    it('Should upload file and failed to save attachment', function () {
+      var tmpFile = tmp.fileSync()
+
+      attachmentStub.returns({
+        save: sinon.stub().rejects()
+      })
+
+      uploadStub.yields({
+      })
+
+      return request(app)
+        .post('/upload')
+        .attach('file', tmpFile.name)
+        .expect(500)
+    })
+
+    it('Should failed to upload for no file attached', function () {
       return request(app)
         .post('/upload')
         .expect(400)
@@ -122,7 +139,6 @@ describe('Routing upload request', function () {
       deleteResourcesStub.yields({})
 
       findByIdStub.resolves({
-        id: attachmentId,
         remove: sinon.stub().resolves()
       })
 
@@ -131,7 +147,22 @@ describe('Routing upload request', function () {
         .expect(204)
     })
 
-    it('Should failed to delete attachment by id', function () {
+    it('Should failed to remove attachment', function () {
+      var attachmentId = mongoose.Types.ObjectId('ATTACHMENTID')
+
+      deleteResourcesStub.yields({
+      })
+
+      findByIdStub.resolves({
+        remove: sinon.stub().rejects()
+      })
+
+      return request(app)
+        .delete('/upload/' + attachmentId)
+        .expect(500)
+    })
+
+    it('Should failed to delete attachment by id from cloudinary', function () {
       var attachmentId = mongoose.Types.ObjectId('ATTACHMENTID')
 
       deleteResourcesStub.yields({
