@@ -1,8 +1,7 @@
 // do not change require order (config must be first)
 var config = require('./config')
-var app = require('./app')
-var db = require('./db')
 var logger = require('./logger')
+var app = require('./app')
 
 var httpServer = null
 
@@ -11,7 +10,7 @@ function startHttpServer () {
     try {
       httpServer = app.listen(config.http.port, config.http.host, function () {
         logger.info('App listening on:', httpServer.address())
-        logger.info('process.env.NODE_ENV="%s", env="%s"', process.env.NODE_ENV, config.name)
+        logger.info('INDEX_DIR="%s", env="%s"', global.INDEX_DIR, config.name)
         resolve(httpServer)
       })
     } catch (err) {
@@ -22,15 +21,13 @@ function startHttpServer () {
 
 function start () {
   return Promise.all([
-    startHttpServer(),
-    db.connect()
+    startHttpServer()
   ])
 }
 
 function stop () {
   return Promise.all([
-    httpServer.close(),
-    db.disconnect()
+    httpServer.close()
   ])
 }
 
