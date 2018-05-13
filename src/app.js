@@ -64,7 +64,10 @@ app.use(function (req, res, next) {
 })
 
 // route
-app.use('/', require('./route'))
+app.use(config.http.baseRoute, [
+  require('./route'),
+  require('./routeUpload')
+])
 
 // error handling
 app.use(function (err, req, res, next) {

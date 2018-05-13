@@ -8,9 +8,12 @@ function baseConfig (name) {
       secret: 'JHVwM3JfJDNjcjM3Cg==',
       expiresIn: 86400 // expires in 24 hours
     },
+    cloudinary: {
+    },
     http: {
-      host: '127.0.0.1',
-      port: 8000
+      host: '0.0.0.0',
+      port: process.env.PORT || 8000,
+      baseRoute: process.env.EXPRESS_APP_ROUTE_BASE_ROUTE || '/'
     },
     logger: {
       transports: [
@@ -23,19 +26,24 @@ function baseConfig (name) {
       exitOnError: false,
       expressFormat: true,
       colorize: true
+    },
+    mongodb: {
+      url: process.env.MONGODB_URI || 'mongodb://mongodb:27017/laranjo-api'
     }
   }
 }
 
 var profiles = {
   'dev': function (config) {
-    config.http.host = '0.0.0.0'
-    config.http.port = 8000
+    config.cloudinary = {
+      cloud_name: 'nodejs-ad',
+      api_key: 'na',
+      api_secret: 'na',
+      upload_prefix: 'https://cloudinary:9443'
+    }
     process.env.NODE_TLS_REJECT_UNAUTHORIZED = '0'
   },
   'production': function (config) {
-    config.http.host = '0.0.0.0'
-    config.http.port = process.env.PORT
   }
 }
 

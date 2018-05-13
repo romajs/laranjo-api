@@ -4,6 +4,10 @@ var router = express.Router()
 var logger = require('./logger')
 var routeEventHandler = require('./routeEventHandler')
 
+router.get('/', function (req, res, next) {
+  res.end('VO TI DA U SHUTI')
+})
+
 router.post('/', function (req, res, next) {
   logger.silly('Request body:', req.body)
   req.checkBody('type', 'required').notEmpty()
