@@ -39,17 +39,17 @@ describe('Routing message event requests', function () {
         })
   })
   describe('Should handle message event request properly', function () {
-    var mockAttachment
+    var findOneStub
     before(function () {
-      mockAttachment = sinon.mock(model.Attachment)
+      findOneStub = sinon.stub(model.Attachment, 'findOne')
     })
     after(function () {
-      mockAttachment.verify() && mockAttachment.restore()
+      findOneStub.restore()
     })
     it('With attachment found', function () {
-      mockAttachment.expects('findOne').once().returns(Promise.resolve({
+      findOneStub.resolves({
         url: 'http://localhost:8000/image/upload/v0123456789/dm8tdGktZGEtdS1zaHV0aQo='
-      }))
+      })
       return request(app)
           .post('/')
           .send({
@@ -73,7 +73,7 @@ describe('Routing message event requests', function () {
           })
     })
     it('With no attachment found', function () {
-      mockAttachment.expects('findOne').once().returns(Promise.resolve(null))
+      findOneStub.resolves(null)
       return request(app)
           .post('/')
           .send({
