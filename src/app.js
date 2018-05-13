@@ -11,6 +11,7 @@ var path = require('path')
 
 var config = require('./config')
 var logger = require('./logger')
+var util = require('./util')
 
 // blocked
 blocked(function (ms) {
@@ -45,7 +46,11 @@ app.use(bodyParser.urlencoded({
 app.use(bodyParser.json())
 
 // custom express validatos
-app.use(expressValidator())
+app.use(expressValidator({
+  customValidators: {
+    isObjectId: util.isObjectId
+  }
+}))
 
 // express winston logger
 app.use(expressWinston.logger(function () {
