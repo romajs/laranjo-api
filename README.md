@@ -4,6 +4,7 @@ API for Google Hangouts Chat Bot contenplating `@Laranjo` memes.
 
 [![CircleCI](https://img.shields.io/circleci/project/github/romajs/laranjo-api.svg)](https://circleci.com/gh/romajs/laranjo-api)
 [![Codecov](https://img.shields.io/codecov/c/github/romajs/laranjo-api.svg)](https://codecov.io/gh/romajs/laranjo-api)
+
 [![dependencies](https://david-dm.org/romajs/laranjo-api.svg)](https://david-dm.org/romajs/laranjo-api)
 [![devDependencies](https://david-dm.org/romajs/laranjo-api/dev-status.svg)](https://david-dm.org/romajs/laranjo-api?type=dev)
 
