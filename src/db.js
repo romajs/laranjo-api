@@ -20,14 +20,6 @@ function connect () {
   })
 }
 
-function isObjectId (id) {
-  try {
-    return mongoose.Types.ObjectId(id)
-  } catch (err) {
-    return false
-  }
-}
-
 function disconnect () {
   return client.disconnect()
 }
@@ -37,6 +29,5 @@ mongoose.Promise = global.Promise
 module.exports = {
   connect,
   connection: mongoose.connection,
-  disconnect,
-  isObjectId
+  disconnect
 }

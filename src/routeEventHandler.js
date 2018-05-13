@@ -7,9 +7,6 @@ var routeEventHandlers = {
 }
 
 function AddedToSpadeRouteEventHandler () {
-  this.validate = function (req) {
-  }
-
   this.buildResponse = function (req, res, next) {
     var text = 'VO TI DA U SHUTI'
     return res.json({

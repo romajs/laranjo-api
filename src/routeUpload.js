@@ -10,6 +10,16 @@ var model = require('./model')
 
 cloudinary.config(config.cloudinary || {})
 
+router.get('/upload', function (req, res, next) {
+  return model.Attachment.find(req.query).then(function (attachments) {
+    if (attachments.length === 0) {
+      return res.status(204).end()
+    } else {
+      return res.status(200).json(attachments)
+    }
+  })
+})
+
 router.post('/upload', function (req, res, next) {
   var form = new formidable.IncomingForm()
 
@@ -69,7 +79,7 @@ router.post('/upload', function (req, res, next) {
         tags: tags
       })
 
-      logger.silly('Attachment="%j"', attachment)
+      logger.silly('New attachment="%j"', attachment)
 
       return attachment.save().then(function (attachment) {
         return res.status(200).json(attachment)
@@ -79,6 +89,38 @@ router.post('/upload', function (req, res, next) {
     }
 
     return cloudinary.uploader.upload(file.path, cloudinaryCallback)
+  })
+})
+
+router.delete('/upload/:id', function (req, res, next) {
+  req.checkParams('id').isObjectId()
+
+  req.getValidationResult().then(function (result) {
+    if (!result.isEmpty()) {
+      return res.status(400).json(result.array())
+    }
+  }).then(function () {
+    return model.Attachment.findById(req.params.id).then(function (attachment) {
+      logger.debug('Found attachment="%j"', attachment)
+
+      if (attachment === null) {
+        return res.status(404).end()
+      }
+
+      return cloudinary.api.delete_resources(attachment.cloudinary_id, function (cloudinaryResult) {
+        logger.debug('cloudinaryResult:', cloudinaryResult)
+
+        if (!cloudinaryResult || cloudinaryResult.error) {
+          return next(cloudinaryResult.error)
+        }
+
+        return attachment.remove().then(function () {
+          return res.status(204).end()
+        }).catch(function (err) {
+          return next(err)
+        })
+      })
+    })
   })
 })
 
