@@ -9,7 +9,7 @@ API for Google Hangouts Chat Bot contenplating `@Laranjo` memes.
 
 [![js-standard-style](https://img.shields.io/badge/code%20style-standard-brightgreen.svg)](http://standardjs.com)
 
-[![node](https://img.shields.io/badge/node-6.11.0-yellow.svg)](https://nodejs.org/en/blog/release/v6.14.2/)
+[![node](https://img.shields.io/badge/node-6.14.2-yellow.svg)](https://nodejs.org/en/blog/release/v6.14.2/)
 [![npm](https://img.shields.io/badge/npm-3.10.10-yellow.svg)](https://github.com/npm/npm/releases/tag/v3.10.10)
 
 ## Build
