@@ -11,6 +11,7 @@ var path = require('path')
 
 var config = require('./config')
 var logger = require('./logger')
+var util = require('./util')
 
 // blocked
 blocked(function (ms) {
@@ -45,7 +46,11 @@ app.use(bodyParser.urlencoded({
 app.use(bodyParser.json())
 
 // custom express validatos
-app.use(expressValidator())
+app.use(expressValidator({
+  customValidators: {
+    isObjectId: util.isObjectId
+  }
+}))
 
 // express winston logger
 app.use(expressWinston.logger(function () {
@@ -72,11 +77,7 @@ app.use(config.http.baseRoute, [
 // error handling
 app.use(function (err, req, res, next) {
   logger.error(err.stack)
-  return res.status(500).send({
-    status: 500,
-    message: 'Internal error',
-    type: 'internal_error'
-  }) || next()
+  return next(err)
 })
 
 module.exports = app

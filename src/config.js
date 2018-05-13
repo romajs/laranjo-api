@@ -2,7 +2,7 @@ var winston = require('winston')
 
 function baseConfig (name) {
   return {
-    name: name || 'default',
+    name: name,
     auth: {
       header_name: 'x-access-token',
       secret: 'JHVwM3JfJDNjcjM3Cg==',
