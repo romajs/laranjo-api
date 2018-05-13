@@ -10,7 +10,7 @@ services:
     volumes:
       - ./:/app
   cloudinary:
-    image: cloudinary-mock
+    image: romajs/cloudinary-mock
     ports:
       - "9080:9080"
       - "9443:9443"

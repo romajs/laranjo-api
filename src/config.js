@@ -36,7 +36,7 @@ function baseConfig (name) {
 var profiles = {
   'dev': function (config) {
     config.cloudinary = {
-      cloud_name: 'nodejs-ad',
+      cloud_name: 'laranjo-api',
       api_key: 'na',
       api_secret: 'na',
       upload_prefix: 'https://cloudinary:9443'
