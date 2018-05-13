@@ -1,4 +1,5 @@
 var logger = require('./logger')
+var model = require('./model')
 
 var routeEventHandlers = {
   'ADDED_TO_SPACE': AddedToSpadeRouteEventHandler,
@@ -19,32 +20,39 @@ function AddedToSpadeRouteEventHandler () {
 
 function MessageRouteEventHandler () {
   this.validate = function (req) {
-    req.checkBody('space.name', 'required').notEmpty()
     req.checkBody('message.argumentText', 'required').notEmpty()
-    req.checkBody('message.thread.name', 'required').notEmpty()
   }
 
   this.buildResponse = function (req, res, next) {
-    var msg = req.body.message.argumentText.trim()
+    var text = req.body.message.argumentText.trim()
 
-    return res.json({
-      'cards': [{
-        'sections': [{
-          'widgets': [{
-            'image': {
-              'imageUrl': req.urlOrigin + this.fetchImage(msg)
-            }
-          }]
-        }]
-      }]
-    })
-  }
-
-  this.fetchImage = function (msg) {
-    if (msg === 'gas') {
-      return `/img/o-o-gas.jpg`
+    var query = {
+      'tags': {
+        $in: text.split(' ')
+      }
     }
-    return `/img/vo-ti-da-u-shuti.jpg`
+
+    return model.Attachment.findOne(query).then(function (attachment) {
+      if (attachment === null) {
+        logger.debug('Query="%j". No attachment found.', query)
+        return res.status(404).end()
+      } else {
+        logger.debug('Query="%j". Found attachment="%j"', query, attachment)
+        return res.json({
+          'cards': [{
+            'sections': [{
+              'widgets': [{
+                'image': {
+                  'imageUrl': attachment.url
+                }
+              }]
+            }]
+          }]
+        })
+      }
+    }).catch(function (err) {
+      return next(err)
+    })
   }
 }
 
