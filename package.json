@@ -50,7 +50,8 @@
     "nodemon": "^1.11.0",
     "pre-commit": "^1.2.2",
     "sinon": "^5.0.7",
-    "supertest": "^3.0.0"
+    "supertest": "^3.0.0",
+    "tmp": "0.0.33"
   },
   "pre-commit": [
     "lint",

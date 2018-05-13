@@ -52,12 +52,12 @@ router.post('/upload', function (req, res, next) {
     logger.debug('file: name="%s", path="%s", type="%s", size=%s bytes, hash="%s", lastModifiedDate="%s", tags="%s"',
       file.name, file.path, file.type, file.size, file.hash, file.lastModifiedDate, tags)
 
-    return cloudinary.uploader.upload(file.path, function (cloudinaryResult) {
+    function cloudinaryCallback (cloudinaryResult) {
+      logger.debug('cloudinaryResult:', cloudinaryResult)
+
       if (!cloudinaryResult || cloudinaryResult.error) {
         return next(cloudinaryResult.error)
       }
-
-      logger.debug('cloudinaryResult:', cloudinaryResult)
 
       var attachment = new model.Attachment({
         name: file.name,
@@ -69,12 +69,16 @@ router.post('/upload', function (req, res, next) {
         tags: tags
       })
 
+      logger.silly('Attachment="%j"', attachment)
+
       return attachment.save().then(function (attachment) {
         return res.status(200).json(attachment)
       }).catch(function (err) {
         return next(err)
       })
-    })
+    }
+
+    return cloudinary.uploader.upload(file.path, cloudinaryCallback)
   })
 })
 
