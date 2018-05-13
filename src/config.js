@@ -8,6 +8,8 @@ function baseConfig (name) {
       secret: 'JHVwM3JfJDNjcjM3Cg==',
       expiresIn: 86400 // expires in 24 hours
     },
+    cloudinary: {
+    },
     http: {
       host: '0.0.0.0',
       port: process.env.PORT || 8000,
@@ -33,6 +35,12 @@ function baseConfig (name) {
 
 var profiles = {
   'dev': function (config) {
+    config.cloudinary = {
+      cloud_name: 'nodejs-ad',
+      api_key: 'na',
+      api_secret: 'na',
+      upload_prefix: 'https://cloudinary:9443'
+    }
     process.env.NODE_TLS_REJECT_UNAUTHORIZED = '0'
   },
   'production': function (config) {

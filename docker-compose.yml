@@ -3,12 +3,18 @@ services:
   dev:
     build: .
     links:
+      - cloudinary
       - mongodb
     ports:
       - "8000:8000"
     volumes:
       - ./:/app
+  cloudinary:
+    image: cloudinary-mock
+    ports:
+      - "9080:9080"
+      - "9443:9443"
   mongodb:
-    image: mongo:3.0
+    image: mongo:3.6.4-jessie
     ports:
       - "27017:27017"
