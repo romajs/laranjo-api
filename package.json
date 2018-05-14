@@ -26,6 +26,7 @@
     "body-parser": "^1.17.1",
     "cloudinary": "^1.11.0",
     "compression": "^1.6.2",
+    "convict": "^4.2.0",
     "cors": "^2.8.4",
     "express": "^4.15.2",
     "express-validator": "^5.2.0",

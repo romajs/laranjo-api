@@ -6,15 +6,15 @@ var logger = require('./logger')
 var client = null
 
 function connect () {
-  var url = config.mongodb.url
+  var MONGODB_URI = config.get('mongodb.uri')
   return new Promise(function (resolve, reject) {
-    client = mongoose.connect(url)
+    client = mongoose.connect(MONGODB_URI)
     mongoose.connection.on('error', function (err) {
       logger.error(err)
       reject(err)
     })
     mongoose.connection.once('open', function () {
-      logger.info('MongoDB/mongoose connected successfully at: %s', url)
+      logger.info('MongoDB/mongoose connected successfully at: %s', MONGODB_URI)
       resolve(mongoose.connection)
     })
   })

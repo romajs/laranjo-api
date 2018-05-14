@@ -8,7 +8,8 @@ var config = require('./config')
 var logger = require('./logger')
 var model = require('./model')
 
-cloudinary.config(config.cloudinary || {})
+var CLOUDINARY_CONFIG = config.get('cloudinary')
+cloudinary.config(CLOUDINARY_CONFIG)
 
 router.get('/upload', function (req, res, next) {
   return model.Attachment.find(req.query).then(function (attachments) {

@@ -65,7 +65,8 @@ app.use(function (req, res, next) {
 })
 
 // route
-app.use(config.http.baseRoute, [
+var BASE_ROUTE = config.get('http.baseRoute')
+app.use(BASE_ROUTE, [
   require('./route'),
   require('./routeUpload')
 ])
