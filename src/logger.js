@@ -1,6 +1,5 @@
 var winston = require('winston')
 
-var config = require('./config')
 var util = require('./util')
 
 var loggerOptions = util.getDefaultLoggerOptions()

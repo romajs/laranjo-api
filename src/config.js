@@ -1,7 +1,3 @@
-var winston = require('winston')
-
-var env = process.env.NODE_ENV
-
 var config = {
   cloudinary: {
     upload_prefix: process.env.CLOUDINARY_UPLOAD_PREFIX
