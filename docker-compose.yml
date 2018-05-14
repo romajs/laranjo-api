@@ -7,10 +7,11 @@ services:
       - mongodb
     ports:
       - "8000:8000"
+    restart: "on-failure"
     volumes:
       - ./:/app
   cloudinary:
-    image: romajs/cloudinary-mock
+    image: romajs/cloudinary-mock:latest
     ports:
       - "9080:9080"
       - "9443:9443"

@@ -1,57 +1,57 @@
-var winston = require('winston')
+var convict = require('convict')
 
-function baseConfig (name) {
-  return {
-    name: name,
-    auth: {
-      header_name: 'x-access-token',
-      secret: 'JHVwM3JfJDNjcjM3Cg==',
-      expiresIn: 86400 // expires in 24 hours
-    },
-    cloudinary: {
-    },
-    http: {
-      host: '0.0.0.0',
-      port: process.env.PORT || 8000,
-      baseRoute: process.env.EXPRESS_APP_ROUTE_BASE_ROUTE || '/'
-    },
-    logger: {
-      transports: [
-        new winston.transports.Console({
-          colorize: true,
-          timestamp: true
-        })
-      ],
-      level: 'silly',
-      exitOnError: false,
-      expressFormat: true,
-      colorize: true
-    },
-    mongodb: {
-      url: process.env.MONGODB_URI || 'mongodb://mongodb:27017/laranjo-api'
-    }
-  }
-}
-
-var profiles = {
-  'dev': function (config) {
-    config.cloudinary = {
-      cloud_name: 'laranjo-api',
-      api_key: 'na',
-      api_secret: 'na',
-      upload_prefix: 'https://cloudinary:9443'
-    }
-    process.env.NODE_TLS_REJECT_UNAUTHORIZED = '0'
+var config = convict({
+  env: {
+    format: ['production', 'development', 'test'],
+    env: 'NODE_ENV'
   },
-  'production': function (config) {
+  cloudinary: {
+    upload_prefix: {
+      format: '*',
+      default: null,
+      env: 'CLOUDINARY_UPLOAD_PREFIX',
+      arg: 'cloudinary-upload-prefix'
+    }
+  },
+  http: {
+    baseRoute: {
+      format: String,
+      default: '/',
+      env: 'BASE_ROUTE',
+      arg: 'base-route'
+    },
+    host: {
+      format: 'ipaddress',
+      default: '127.0.0.1',
+      env: 'HOST',
+      arg: 'host'
+    },
+    port: {
+      format: 'port',
+      default: 8000,
+      env: 'PORT',
+      arg: 'port'
+    }
+  },
+  logger: {
+    level: {
+      format: String,
+      default: 'debug',
+      env: 'LOGGER_LEVEL',
+      arg: 'logger-level'
+    }
+  },
+  mongodb: {
+    uri: {
+      format: '*',
+      default: null,
+      env: 'MONGODB_URI',
+      arg: 'mongodb-url',
+      sensitive: true
+    }
   }
-}
+})
 
-var env = process.env.NODE_ENV || 'dev'
-
-var config = baseConfig(env)
-var profile = profiles[env]
-
-profile(config)
+config.validate({allowed: 'strict'})
 
 module.exports = config

@@ -4,14 +4,18 @@ var app = require('./app')
 var db = require('./db')
 var logger = require('./logger')
 
+var HTTP_HOST = config.get('http.host')
+var HTTP_PORT = config.get('http.port')
+
 var httpServer = null
 
 function startHttpServer () {
   return new Promise(function (resolve, reject) {
+    logger.info(HTTP_PORT, HTTP_HOST)
     try {
-      httpServer = app.listen(config.http.port, config.http.host, function () {
+      httpServer = app.listen(HTTP_PORT, HTTP_HOST, function () {
         logger.info('App listening on:', httpServer.address())
-        logger.info('process.env.NODE_ENV="%s", env="%s"', process.env.NODE_ENV, config.name)
+        logger.info('process.env.NODE_ENV="%s"', process.env.NODE_ENV)
         resolve(httpServer)
       })
     } catch (err) {

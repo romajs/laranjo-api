@@ -53,12 +53,8 @@ app.use(expressValidator({
 }))
 
 // express winston logger
-app.use(expressWinston.logger(function () {
-  // always info, otherwise it wont work
-  var configLogger = config.logger
-  configLogger.level = 'info'
-  return configLogger
-}()))
+var loggerOptions = util.getDefaultLoggerOptions('info')
+app.use(expressWinston.logger(loggerOptions))
 
 app.use(function (req, res, next) {
   req.urlOrigin = url.format({
@@ -69,7 +65,8 @@ app.use(function (req, res, next) {
 })
 
 // route
-app.use(config.http.baseRoute, [
+var BASE_ROUTE = config.get('http.baseRoute')
+app.use(BASE_ROUTE, [
   require('./route'),
   require('./routeUpload')
 ])
