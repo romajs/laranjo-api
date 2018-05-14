@@ -11,11 +11,11 @@ var httpServer = null
 
 function startHttpServer () {
   return new Promise(function (resolve, reject) {
-    logger.info(HTTP_PORT, HTTP_HOST)
     try {
       httpServer = app.listen(HTTP_PORT, HTTP_HOST, function () {
         logger.info('App listening on:', httpServer.address())
-        logger.info('process.env.NODE_ENV="%s"', process.env.NODE_ENV)
+        logger.debug('process.env.NODE_ENV="%s"', process.env.NODE_ENV)
+        logger.silly('config=%s', config.toString())
         resolve(httpServer)
       })
     } catch (err) {

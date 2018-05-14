@@ -15,18 +15,15 @@ var util = require('./util')
 
 // blocked
 blocked(function (ms) {
-  logger.warn('blocked for %sms', ms | 0)
+  logger.silly('blocked for %s ms', ms | 0)
 })
 
 // app
 var app = express()
 
 // static
-app.use(express.static(function () {
-  var staticDirPath = path.resolve(`${__dirname}/../static`)
-  logger.debug('staticDirPath:', staticDirPath)
-  return staticDirPath
-}()))
+var STATIC_DIR_PATH = path.resolve(`${__dirname}/../static`)
+app.use(express.static(STATIC_DIR_PATH))
 
 // cors
 app.use(cors())

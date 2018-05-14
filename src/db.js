@@ -3,10 +3,11 @@ var mongoose = require('mongoose')
 var config = require('./config')
 var logger = require('./logger')
 
+var MONGODB_URI = config.get('mongodb.uri')
+
 var client = null
 
 function connect () {
-  var MONGODB_URI = config.get('mongodb.uri')
   return new Promise(function (resolve, reject) {
     client = mongoose.connect(MONGODB_URI)
     mongoose.connection.on('error', function (err) {
@@ -14,7 +15,7 @@ function connect () {
       reject(err)
     })
     mongoose.connection.once('open', function () {
-      logger.info('MongoDB/mongoose connected successfully at: %s', MONGODB_URI)
+      logger.info('MongoDB/mongoose connected successfully')
       resolve(mongoose.connection)
     })
   })

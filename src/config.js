@@ -11,6 +11,13 @@ var config = convict({
       default: null,
       env: 'CLOUDINARY_UPLOAD_PREFIX',
       arg: 'cloudinary-upload-prefix'
+    },
+    url: {
+      format: '*',
+      default: null,
+      env: 'CLOUDINARY_URL',
+      arg: 'cloudinary-url',
+      sensitive: true
     }
   },
   http: {
