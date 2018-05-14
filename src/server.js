@@ -11,7 +11,7 @@ function startHttpServer () {
     try {
       httpServer = app.listen(config.http.port, config.http.host, function () {
         logger.info('App listening on:', httpServer.address())
-        logger.info('process.env.NODE_ENV="%s", env="%s"', process.env.NODE_ENV, config.name)
+        logger.info('process.env.NODE_ENV="%s"', process.env.NODE_ENV)
         resolve(httpServer)
       })
     } catch (err) {

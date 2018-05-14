@@ -1,4 +1,22 @@
 var mongoose = require('mongoose')
+var winston = require('winston')
+
+var config = require('./config')
+
+function getDefaultLoggerOptions (level) {
+  return {
+    colorize: true,
+    exitOnError: false,
+    expressFormat: true,
+    level: level || config.logger.level,
+    transports: [
+      new winston.transports.Console({
+        colorize: true,
+        timestamp: true
+      })
+    ]
+  }
+}
 
 function isObjectId (id) {
   try {
@@ -9,5 +27,6 @@ function isObjectId (id) {
 }
 
 module.exports = {
+  getDefaultLoggerOptions,
   isObjectId
 }

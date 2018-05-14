@@ -18,7 +18,7 @@
     "coverage": "istanbul cover _mocha -- -R spec",
     "lint": "eslint . --ignore-path .gitignore",
     "start": "node index start-server",
-    "start-dev": "nodemon index start-server",
+    "start-dev": "NODE_ENV=dev nodemon index start-server",
     "test": "mocha"
   },
   "dependencies": {
