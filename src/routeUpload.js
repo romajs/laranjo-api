@@ -1,3 +1,4 @@
+var auth = require('http-auth')
 var cloudinary = require('cloudinary')
 var formidable = require('formidable')
 
@@ -8,8 +9,22 @@ var config = require('./config')
 var logger = require('./logger')
 var model = require('./model')
 
+var ADMIN_AUTH_ENABLED = config.get('admin.auth.enabled')
+var ADMIN_AUTH_USERNAME = config.get('admin.auth.username')
+var ADMIN_AUTH_PASSWORD = config.get('admin.auth.password')
 var CLOUDINARY_CONFIG = config.get('cloudinary')
+
 cloudinary.config(CLOUDINARY_CONFIG)
+
+if (ADMIN_AUTH_ENABLED) {
+  var basic = auth.basic({
+    realm: 'admin'
+  }, function (username, password, callback) {
+    var isAuthorized = username === ADMIN_AUTH_USERNAME && password === ADMIN_AUTH_PASSWORD
+    callback(isAuthorized)
+  })
+  router.use(auth.connect(basic))
+}
 
 router.get('/upload', function (req, res, next) {
   return model.Attachment.find(req.query).then(function (attachments) {
