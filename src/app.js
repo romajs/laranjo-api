@@ -6,7 +6,6 @@ var express = require('express')
 var expressValidator = require('express-validator')
 var expressWinston = require('express-winston')
 var helmet = require('helmet')
-var url = require('url')
 var path = require('path')
 
 var config = require('./config')
@@ -15,18 +14,15 @@ var util = require('./util')
 
 // blocked
 blocked(function (ms) {
-  logger.warn('blocked for %sms', ms | 0)
+  logger.silly('blocked for %s ms', ms | 0)
 })
 
 // app
 var app = express()
 
 // static
-app.use(express.static(function () {
-  var staticDirPath = path.resolve(`${__dirname}/../static`)
-  logger.debug('staticDirPath:', staticDirPath)
-  return staticDirPath
-}()))
+var STATIC_DIR_PATH = path.resolve(`${__dirname}/../static`)
+app.use(express.static(STATIC_DIR_PATH))
 
 // cors
 app.use(cors())
@@ -56,20 +52,13 @@ app.use(expressValidator({
 var loggerOptions = util.getDefaultLoggerOptions('info')
 app.use(expressWinston.logger(loggerOptions))
 
-app.use(function (req, res, next) {
-  req.urlOrigin = url.format({
-    protocol: req.protocol,
-    host: req.get('host')
-  })
-  next()
-})
+function routePath (path) {
+  return `${config.get('http.rootBasePath')}/${path}/`.replace(/\//g, '')
+}
 
 // route
-var BASE_ROUTE = config.get('http.baseRoute')
-app.use(BASE_ROUTE, [
-  require('./route'),
-  require('./routeUpload')
-])
+app.use(routePath(`${config.get('googleHangoutsChat.basePath')}`), require('./route'))
+app.use(routePath(`${config.get('admin.basePath')}`), require('./routeUpload'))
 
 // error handling
 app.use(function (err, req, res, next) {

@@ -1,3 +1,4 @@
+var basicAuth = require('basic-auth')
 var cloudinary = require('cloudinary')
 var formidable = require('formidable')
 
@@ -8,8 +9,17 @@ var config = require('./config')
 var logger = require('./logger')
 var model = require('./model')
 
-var CLOUDINARY_CONFIG = config.get('cloudinary')
-cloudinary.config(CLOUDINARY_CONFIG)
+cloudinary.config(config.get('cloudinary'))
+
+router.use(function (req, res, next) {
+  if (config.get('admin.auth.enabled')) {
+    var auth = basicAuth(req)
+    if (auth === undefined || (auth.name !== config.get('admin.auth.username') && auth.pass !== config.get('admin.auth.password'))) {
+      return res.status(401).end()
+    }
+  }
+  return next()
+})
 
 router.get('/upload', function (req, res, next) {
   return model.Attachment.find(req.query).then(function (attachments) {

@@ -4,12 +4,22 @@ var router = express.Router()
 var logger = require('./logger')
 var routeEventHandler = require('./routeEventHandler')
 
+var config = require('./config')
+
+router.use(function (req, res, next) {
+  if (config.get('googleHangoutsChat.auth.enabled') === true && req.body.token !== config.get('googleHangoutsChat.auth.token')) {
+    return res.status(401).end()
+  }
+  return next()
+})
+
 router.get('/', function (req, res, next) {
-  res.end('VO TI DA U SHUTI')
+  return res.end('VO TI DA U SHUTI')
 })
 
 router.post('/', function (req, res, next) {
   logger.silly('Request body:', req.body)
+
   req.checkBody('type', 'required').notEmpty()
 
   return req.getValidationResult().then(function (result) {
