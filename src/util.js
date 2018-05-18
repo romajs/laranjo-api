@@ -3,14 +3,12 @@ var winston = require('winston')
 
 var config = require('./config')
 
-var LOGGER_LEVEL = config.get('logger.level')
-
 function getDefaultLoggerOptions (level) {
   return {
     colorize: true,
     exitOnError: false,
     expressFormat: true,
-    level: level || LOGGER_LEVEL,
+    level: level || config.get('logger.level'),
     transports: [
       new winston.transports.Console({
         colorize: true,
