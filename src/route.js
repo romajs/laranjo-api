@@ -6,8 +6,15 @@ var routeEventHandler = require('./routeEventHandler')
 
 var config = require('./config')
 
+router.use(function (req, res, next) {
+  if (config.get('googleHangoutsChat.auth.enabled') === true && req.body.token !== config.get('googleHangoutsChat.auth.token')) {
+    return res.status(401).end()
+  }
+  return next()
+})
+
 router.get('/', function (req, res, next) {
-  res.end('VO TI DA U SHUTI')
+  return res.end('VO TI DA U SHUTI')
 })
 
 router.post('/', function (req, res, next) {
@@ -15,21 +22,11 @@ router.post('/', function (req, res, next) {
 
   req.checkBody('type', 'required').notEmpty()
 
-  var AUTH_ENABLED = config.get('googleHangoutsChat.auth.enabled')
-
-  if (AUTH_ENABLED) {
-    req.checkBody('token', 'required').notEmpty()
-  }
-
   return req.getValidationResult().then(function (result) {
     if (!result.isEmpty()) {
       return res.status(400).json(result.array())
     }
   }).then(function () {
-    if (AUTH_ENABLED && req.body.token !== config.get('googleHangoutsChat.auth.token')) {
-      return res.status(401).end()
-    }
-
     var type = req.body.type
     var handler = routeEventHandler(type)
 
