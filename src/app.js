@@ -53,7 +53,9 @@ var loggerOptions = util.getDefaultLoggerOptions('info')
 app.use(expressWinston.logger(loggerOptions))
 
 function routePath (path) {
-  return `${config.get('http.rootBasePath')}/${path}/`.replace(/\//g, '')
+  var routePath = `${config.get('http.rootBasePath')}/${path}`.replace(/\/+/g, '/')
+  logger.debug(`Registering route at ${routePath}`)
+  return routePath
 }
 
 // route
