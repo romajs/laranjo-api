@@ -1,6 +1,7 @@
 var basicAuth = require('basic-auth')
 var cloudinary = require('cloudinary')
 var formidable = require('formidable')
+var unleashClient = require('unleash-client')
 
 var express = require('express')
 var router = express.Router()
@@ -12,7 +13,7 @@ var model = require('./model')
 cloudinary.config(config.get('cloudinary'))
 
 router.use(function (req, res, next) {
-  if (config.get('admin.auth.enabled')) {
+  if (unleashClient.isEnabled('admin.auth.enabled') === true) {
     var auth = basicAuth(req)
     if (auth === undefined || (auth.name !== config.get('admin.auth.username') && auth.pass !== config.get('admin.auth.password'))) {
       return res.status(401).end()

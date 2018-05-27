@@ -22,12 +22,6 @@ var config = convict({
   },
   admin: {
     auth: {
-      enabled: {
-        format: Boolean,
-        default: false,
-        env: 'ADMIN_AUTH_ENABLED',
-        arg: 'admin-auth-enabled'
-      },
       password: {
         format: String,
         default: '',
@@ -50,12 +44,6 @@ var config = convict({
   },
   googleHangoutsChat: {
     auth: {
-      enabled: {
-        format: Boolean,
-        default: false,
-        env: 'GOOGLE_HANGOUTS_CHAT_AUTH_ENABLED',
-        arg: 'google-hangouts-chat-auth-enabled'
-      },
       token: {
         format: String,
         default: '',
@@ -104,6 +92,15 @@ var config = convict({
       default: null,
       env: 'MONGODB_URI',
       arg: 'mongodb-url',
+      sensitive: true
+    }
+  },
+  unleash: {
+    url: {
+      format: '*',
+      default: null,
+      env: 'UNLEASH_URL',
+      arg: 'unleash-url',
       sensitive: true
     }
   }

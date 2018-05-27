@@ -3,6 +3,7 @@ var config = require('./config')
 var app = require('./app')
 var db = require('./db')
 var logger = require('./logger')
+var configUnleash = require('./config-unleash')
 
 var httpServer = null
 
@@ -24,14 +25,16 @@ function startHttpServer () {
 function start () {
   return Promise.all([
     startHttpServer(),
-    db.connect()
+    db.connect(),
+    configUnleash.initialize()
   ])
 }
 
 function stop () {
   return Promise.all([
     httpServer.close(),
-    db.disconnect()
+    db.disconnect(),
+    configUnleash.destroy()
   ])
 }
 

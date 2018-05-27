@@ -1,13 +1,14 @@
+var unleashClient = require('unleash-client')
+
 var express = require('express')
 var router = express.Router()
 
+var config = require('./config')
 var logger = require('./logger')
 var routeEventHandler = require('./routeEventHandler')
 
-var config = require('./config')
-
 router.use(function (req, res, next) {
-  if (config.get('googleHangoutsChat.auth.enabled') === true && req.body.token !== config.get('googleHangoutsChat.auth.token')) {
+  if (unleashClient.isEnabled('googleHangoutsChat.auth.enabled') === true && req.body.token !== config.get('googleHangoutsChat.auth.token')) {
     return res.status(401).end()
   }
   return next()

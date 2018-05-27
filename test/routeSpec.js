@@ -1,14 +1,25 @@
 var request = require('supertest')
 var sinon = require('sinon')
+var unleash = require('unleash-client')
 
 var app = require('../src/app')
 var config = require('../src/config')
 var model = require('../src/model')
 
 describe('Routing message event requests', function () {
+  var unleashIsEnabledStub
+
+  before(function () {
+    unleashIsEnabledStub = sinon.stub(unleash, 'isEnabled')
+  })
+
+  after(function () {
+    unleashIsEnabledStub.restore()
+  })
+
   describe('With authentication enabled', function () {
     before(function () {
-      config.set('googleHangoutsChat.auth.enabled', true)
+      unleashIsEnabledStub.withArgs('googleHangoutsChat.auth.enabled').returns(true)
     })
 
     it('Should authenticate sucessfully', function () {
@@ -41,7 +52,7 @@ describe('Routing message event requests', function () {
 
   describe('With authentication disabled', function () {
     before(function () {
-      config.set('googleHangoutsChat.auth.enabled', false)
+      unleashIsEnabledStub.withArgs('googleHangoutsChat.auth.enabled').returns(false)
     })
 
     it('Should fail to handle unknown event request', function () {

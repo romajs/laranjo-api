@@ -5,20 +5,31 @@ var mongoose = require('mongoose')
 var request = require('supertest')
 var sinon = require('sinon')
 var tmp = require('tmp')
+var unleash = require('unleash-client')
 
 var app = require('../src/app')
 var config = require('../src/config')
 var model = require('../src/model')
 
 describe('Routing upload request', function () {
+  var unleashIsEnabledStub
+
+  before(function () {
+    unleashIsEnabledStub = sinon.stub(unleash, 'isEnabled')
+  })
+
+  after(function () {
+    unleashIsEnabledStub.restore()
+  })
+
   describe('With authentication enabled', function () {
     var findStub
 
     before(function () {
-      config.set('admin.auth.enabled', true)
       config.set('admin.auth.username', 'TEST_USER')
       config.set('admin.auth.password', 'TEST_PASS')
       findStub = sinon.stub(model.Attachment, 'find')
+      unleashIsEnabledStub.withArgs('admin.auth.enabled').returns(true)
     })
 
     after(function () {
@@ -54,7 +65,7 @@ describe('Routing upload request', function () {
 
   describe('With authentication disabled', function () {
     before(function () {
-      config.set('admin.auth.enabled', false)
+      unleashIsEnabledStub.withArgs('admin.auth.enabled').returns(false)
     })
 
     describe('Should handle upload request /GET', function () {
