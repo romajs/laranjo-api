@@ -13,7 +13,15 @@ var model = require('./model')
 cloudinary.config(config.get('cloudinary'))
 
 function formatFile (file) {
-  return `name="${file.name}", path="${file.path}", type="${file.type}", size=${bytes(file.size)} bytes, hash="${file.hash || ''}", lastModifiedDate="${file.lastModifiedDate}"`
+  var format = [
+    `name="${file.name}"`,
+    `path="${file.path}"`,
+    `type="${file.type}"`,
+    `size=${file.size && bytes(file.size)} bytes`,
+    `hash="${file.size && file.hash}"`,
+    `lastModifiedDate="${file.size && file.lastModifiedDate}"`
+  ]
+  return format.join(', ')
 }
 
 router.use(function (req, res, next) {

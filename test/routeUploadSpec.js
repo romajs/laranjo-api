@@ -1,6 +1,7 @@
 var fs = require('fs')
 
 var cloudinary = require('cloudinary')
+var formidable = require('formidable')
 var mongoose = require('mongoose')
 var request = require('supertest')
 var sinon = require('sinon')
@@ -159,10 +160,38 @@ describe('Routing upload request', function () {
           .expect(500)
       })
 
-      it('Should failed to upload for no file attached', function () {
+      it('Should fail to upload for no file attached', function () {
         return request(app)
           .post('/upload')
           .expect(400)
+      })
+
+      describe('Should handle upload request /POST form', function () {
+        var formStub
+
+        before(function () {
+          formStub = sinon.stub(formidable, 'IncomingForm')
+        })
+
+        after(function () {
+          formStub.restore()
+        })
+
+        it('Should fail to upload file on form parse error', function () {
+          var tmpFile = tmp.fileSync()
+          var error = new Error('There was a form parse error during upload')
+
+          formStub.returns({
+            on: function () {},
+            parse: sinon.stub().yields(error)
+          })
+
+          return request(app)
+            .post('/upload')
+            .field('tags', 'tag1, tag2, tag3')
+            .attach('file', tmpFile.name)
+            .expect(500)
+        })
       })
     })
 
