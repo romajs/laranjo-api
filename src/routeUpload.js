@@ -119,18 +119,10 @@ router.delete('/upload/:id', function (req, res, next) {
         return res.status(404).end()
       }
 
-      return cloudinary.api.delete_resources(attachment.cloudinary_id, function (cloudinaryResult) {
-        logger.debug('cloudinaryResult:', cloudinaryResult)
-
-        if (!cloudinaryResult || cloudinaryResult.error) {
-          return next(cloudinaryResult.error)
-        }
-
-        return attachment.remove().then(function () {
-          return res.status(204).end()
-        }).catch(function (err) {
-          return next(err)
-        })
+      return attachment.remove().then(function () {
+        return res.status(204).end()
+      }).catch(function (err) {
+        return next(err)
       })
     })
   })
