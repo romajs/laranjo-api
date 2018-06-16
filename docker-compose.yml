@@ -1,15 +1,5 @@
 version: '2'
 services:
-  dev:
-    build: .
-    links:
-      - cloudinary
-      - mongodb
-    ports:
-      - "8000:8000"
-    restart: "on-failure"
-    volumes:
-      - ./:/app
   cloudinary:
     image: romajs/cloudinary-mock:latest
     ports:
@@ -19,3 +9,24 @@ services:
     image: mongo:3.6.4-jessie
     ports:
       - "27017:27017"
+  web:
+    build: .
+    environment:
+      ADMIN_BASE_PATH: /
+      CLOUDINARY_UPLOAD_PREFIX: https://cloudinary:9443
+      CLOUDINARY_URL: cloudinary://api_key:api_secret@laranjo-api
+      GOOGLE_HANGOUTS_CHAT_BASE_PATH: /
+      HOST: 0.0.0.0
+      LOGGER_LEVEL: silly
+      MONGODB_URI: mongodb://mongodb:27017/laranjo-api
+      NODE_TLS_REJECT_UNAUTHORIZED: 0
+      PORT: 8000
+      ROOT_BASE_PATH: /
+    links:
+      - cloudinary
+      - mongodb
+    ports:
+      - "8000:8000"
+    restart: "on-failure"
+    volumes:
+      - ./:/app
