@@ -167,23 +167,18 @@ describe('Routing upload request', function () {
     })
 
     describe('Should handle upload request /DELETE', function () {
-      var deleteResourcesStub
       var findByIdStub
 
       before(function () {
-        deleteResourcesStub = sinon.stub(cloudinary.api, 'delete_resources')
         findByIdStub = sinon.stub(model.Attachment, 'findById')
       })
 
       after(function () {
-        deleteResourcesStub.restore()
         findByIdStub.restore()
       })
 
       it('Should delete attachment by id', function () {
         var attachmentId = mongoose.Types.ObjectId('ATTACHMENTID')
-
-        deleteResourcesStub.yields({})
 
         findByIdStub.resolves({
           remove: sinon.stub().resolves()
@@ -197,26 +192,8 @@ describe('Routing upload request', function () {
       it('Should failed to remove attachment', function () {
         var attachmentId = mongoose.Types.ObjectId('ATTACHMENTID')
 
-        deleteResourcesStub.yields({
-        })
-
         findByIdStub.resolves({
           remove: sinon.stub().rejects()
-        })
-
-        return request(app)
-          .delete('/upload/' + attachmentId)
-          .expect(500)
-      })
-
-      it('Should failed to delete attachment by id from cloudinary', function () {
-        var attachmentId = mongoose.Types.ObjectId('ATTACHMENTID')
-
-        deleteResourcesStub.yields({
-          error: {}
-        })
-
-        findByIdStub.resolves({
         })
 
         return request(app)
