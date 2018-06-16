@@ -1,4 +1,5 @@
 var basicAuth = require('basic-auth')
+var bytes = require('bytes')
 var cloudinary = require('cloudinary')
 var formidable = require('formidable')
 
@@ -10,6 +11,18 @@ var logger = require('./logger')
 var model = require('./model')
 
 cloudinary.config(config.get('cloudinary'))
+
+function formatFile (file) {
+  var format = [
+    `name="${file.name}"`,
+    `path="${file.path}"`,
+    `type="${file.type}"`,
+    `size=${file.size && bytes(file.size)} bytes`,
+    `hash="${file.size && file.hash}"`,
+    `lastModifiedDate="${file.size && file.lastModifiedDate}"`
+  ]
+  return format.join(', ')
+}
 
 router.use(function (req, res, next) {
   if (config.get('admin.auth.enabled')) {
@@ -37,23 +50,26 @@ router.post('/upload', function (req, res, next) {
   form.encoding = 'utf-8'
   form.hash = 'md5'
   form.keepExtensions = true
-  form.maxFields = 1000
-  form.maxFieldsSize = 1024 * 1024 * 2 // 2 MB
+  form.maxFileSize = bytes(config.get('admin.upload.maxFileSize'))
   form.multiples = false
   form.type = 'multipart'
   form.uploadDir = '/tmp'
 
+  form.on('field', function (name, value) {
+    logger.debug(`received field: name="${name}", value="${value}"`)
+  })
+
+  form.on('fileBegin', function (name, file) {
+    logger.debug(`receiving file: ${formatFile(file)}`)
+  })
+
+  form.on('file', function (name, file) {
+    logger.debug(`received file: ${formatFile(file)}`)
+  })
+
   form.on('progress', function (recv, total) {
-    logger.silly('received: %s % (%s / %s bytes)', Number(recv / total * 100).toFixed(2), recv, total)
-  })
-
-  form.on('error', function (err) {
-    next(err)
-  })
-
-  form.on('aborted', function (name, file) {
-    logger.warn('aborted: name="%s", path="%s", type="%s", size=%s bytes', file.name, file.path, file.type, file.size)
-    res.status(308).end()
+    var progress = Number(recv / total * 100).toFixed(2)
+    logger.silly(`progress: ${progress}% (${bytes(recv)})`)
   })
 
   form.parse(req, function (err, fields, files) {
@@ -70,8 +86,7 @@ router.post('/upload', function (req, res, next) {
 
     var tags = fields.tags ? fields.tags.split(',').map(s => s.trim()) : []
 
-    logger.debug('file: name="%s", path="%s", type="%s", size=%s bytes, hash="%s", lastModifiedDate="%s", tags="%s"',
-      file.name, file.path, file.type, file.size, file.hash, file.lastModifiedDate, tags)
+    logger.debug(`uploading file: ${formatFile(file)}, tags="${tags}"`)
 
     function cloudinaryCallback (cloudinaryResult) {
       logger.debug('cloudinaryResult:', cloudinaryResult)
@@ -90,7 +105,7 @@ router.post('/upload', function (req, res, next) {
         tags: tags
       })
 
-      logger.silly('New attachment="%j"', attachment)
+      logger.silly('new attachment="%j"', attachment)
 
       return attachment.save().then(function (attachment) {
         return res.status(200).json(attachment)
@@ -112,7 +127,7 @@ router.delete('/upload/:id', function (req, res, next) {
     }
   }).then(function () {
     return model.Attachment.findById(req.params.id).then(function (attachment) {
-      logger.debug('Found attachment="%j"', attachment)
+      logger.debug('found attachment="%j"', attachment)
 
       if (attachment === null) {
         return res.status(404).end()
