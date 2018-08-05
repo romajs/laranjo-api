@@ -40,6 +40,14 @@ var config = convict({
       default: '/',
       env: 'ADMIN_BASE_PATH',
       arg: 'admin-base-path'
+    },
+    upload: {
+      maxFileSize: {
+        format: String,
+        default: '',
+        env: 'ADMIN_UPLOAD_MAX_FILE_SIZE',
+        arg: 'admin-upload-max-file-size'
+      }
     }
   },
   googleHangoutsChat: {

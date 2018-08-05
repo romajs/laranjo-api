@@ -44,6 +44,7 @@ services:
         npm run start-dev"
     environment:
       ADMIN_BASE_PATH: /
+      ADMIN_UPLOAD_MAX_FILE_SIZE: 2MB
       CLOUDINARY_UPLOAD_PREFIX: https://cloudinary:9443
       CLOUDINARY_URL: cloudinary://api_key:api_secret@laranjo-api
       GOOGLE_HANGOUTS_CHAT_BASE_PATH: /
