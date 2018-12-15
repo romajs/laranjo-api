@@ -43,7 +43,7 @@ var config = convict({
     },
     basePath: {
       format: String,
-      default: '/',
+      default: '/admin',
       env: 'ADMIN_BASE_PATH',
       arg: 'admin-base-path'
     },

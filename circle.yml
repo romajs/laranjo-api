@@ -10,7 +10,7 @@ dependencies:
 
 test:
   override:
-    - npm run coverage && cp -r ./coverage $CIRCLE_ARTIFACTS
+    - npm run test:cover && cp -r ./coverage $CIRCLE_ARTIFACTS
   post:
     - npm run codecov
 
