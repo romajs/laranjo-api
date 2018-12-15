@@ -1,0 +1,150 @@
+{
+	"info": {
+		"_postman_id": "be044c90-0a6c-448c-9b3f-f81b97ea5796",
+		"name": "laranjo-api",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Admin - Upload - List",
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "password",
+							"value": "{{password}}",
+							"type": "string"
+						},
+						{
+							"key": "username",
+							"value": "{{username}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "{{host}}/{{adminBasePath}}/upload",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"{{adminBasePath}}",
+						"upload"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Admin - Upload - Create",
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "password",
+							"value": "{{password}}",
+							"type": "string"
+						},
+						{
+							"key": "username",
+							"value": "{{username}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "file",
+							"type": "file",
+							"src": ""
+						},
+						{
+							"key": "tags",
+							"value": "chute,chuti,shute,shuti",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "{{host}}/{{adminBasePath}}/upload",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"{{adminBasePath}}",
+						"upload"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Chat - Added to Space",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"token\": \"{{token}}\",\n\t\"type\": \"ADDED_TO_SPACE\"\n}"
+				},
+				"url": {
+					"raw": "{{host}}/{{chatBasePath}}",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"{{chatBasePath}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Chat - Message",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"token\": \"{{token}}\",\n\t\"type\": \"MESSAGE\",\n\t\"message\": {\n\t\t\"argumentText\": \"shuti\"\n\t}\n}"
+				},
+				"url": {
+					"raw": "{{host}}/{{chatBasePath}}",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"{{chatBasePath}}"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

@@ -15,10 +15,11 @@
   "homepage": "https://github.com/romajs/laranjo-api#readme",
   "scripts": {
     "codecov": "codecov",
-    "coverage": "istanbul cover _mocha -- -R spec",
-    "lint": "eslint . --ignore-path .gitignore",
+    "lint:watch": "npm run lint -- --watch",
+    "lint": "esw src --color --fix",
+    "start:dev": "NODE_ENV=dev nodemon index start-server",
     "start": "node index start-server",
-    "start-dev": "NODE_ENV=dev nodemon index start-server",
+    "test:cover": "istanbul cover _mocha -- -R spec",
     "test": "mocha"
   },
   "dependencies": {
@@ -41,22 +42,23 @@
   },
   "devDependencies": {
     "codecov": "^3.0.2",
-    "eslint": "^4.19.1",
-    "eslint-config-standard": "^11.0.0",
+    "eslint": "^5.10.0",
+    "eslint-config-standard": "^12.0.0",
     "eslint-plugin-import": "^2.3.0",
-    "eslint-plugin-node": "^6.0.1",
-    "eslint-plugin-promise": "^3.5.0",
-    "eslint-plugin-standard": "^3.0.1",
+    "eslint-plugin-node": "^8.0.0",
+    "eslint-plugin-promise": "^4.0.1",
+    "eslint-plugin-standard": "^4.0.0",
+    "eslint-watch": "^4.0.2",
     "istanbul": "^0.4.5",
     "mocha": "^5.1.1",
     "nodemon": "^1.11.0",
     "pre-commit": "^1.2.2",
-    "sinon": "^6.0.0",
+    "sinon": "^7.2.2",
     "supertest": "^3.0.0",
     "tmp": "0.0.33"
   },
   "pre-commit": [
     "lint",
-    "coverage"
+    "test:cover"
   ]
 }

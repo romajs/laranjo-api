@@ -30,7 +30,7 @@ describe('Routing upload request', function () {
       findStub.resolves([])
 
       return request(app)
-        .get('/upload')
+        .get('/admin/upload')
         .auth('TEST_USER', 'TEST_PASS')
         .expect(204)
     })
@@ -39,7 +39,7 @@ describe('Routing upload request', function () {
       findStub.resolves([])
 
       return request(app)
-        .get('/upload')
+        .get('/admin/upload')
         .auth('TEST_WRONG_USER', 'TEST_WRONG_PASS')
         .expect(401)
     })
@@ -48,7 +48,7 @@ describe('Routing upload request', function () {
       findStub.resolves([])
 
       return request(app)
-        .get('/upload')
+        .get('/admin/upload')
         .expect(401)
     })
   })
@@ -77,7 +77,7 @@ describe('Routing upload request', function () {
         }])
 
         return request(app)
-          .get('/upload')
+          .get('/admin/upload')
           .expect(200)
           .expect('Content-Type', /application\/json/)
           .expect([{
@@ -89,7 +89,7 @@ describe('Routing upload request', function () {
         findStub.resolves([])
 
         return request(app)
-          .get('/upload')
+          .get('/admin/upload')
           .expect(204)
       })
     })
@@ -124,7 +124,7 @@ describe('Routing upload request', function () {
         })
 
         return request(app)
-          .post('/upload')
+          .post('/admin/upload')
           .field('tags', 'tag1, tag2, tag3')
           .attach('file', tmpFile.name)
           .expect(200)
@@ -139,7 +139,7 @@ describe('Routing upload request', function () {
         })
 
         return request(app)
-          .post('/upload')
+          .post('/admin/upload')
           .attach('file', tmpFile.name)
           .expect(500)
       })
@@ -155,14 +155,14 @@ describe('Routing upload request', function () {
         })
 
         return request(app)
-          .post('/upload')
+          .post('/admin/upload')
           .attach('file', tmpFile.name)
           .expect(500)
       })
 
       it('Should fail to upload for no file attached', function () {
         return request(app)
-          .post('/upload')
+          .post('/admin/upload')
           .expect(400)
       })
 
@@ -187,7 +187,7 @@ describe('Routing upload request', function () {
           })
 
           return request(app)
-            .post('/upload')
+            .post('/admin/upload')
             .field('tags', 'tag1, tag2, tag3')
             .attach('file', tmpFile.name)
             .expect(500)
@@ -214,7 +214,7 @@ describe('Routing upload request', function () {
         })
 
         return request(app)
-          .delete('/upload/' + attachmentId)
+          .delete('/admin/upload/' + attachmentId)
           .expect(204)
       })
 
@@ -226,7 +226,7 @@ describe('Routing upload request', function () {
         })
 
         return request(app)
-          .delete('/upload/' + attachmentId)
+          .delete('/admin/upload/' + attachmentId)
           .expect(500)
       })
 
@@ -236,7 +236,7 @@ describe('Routing upload request', function () {
         findByIdStub.resolves(null)
 
         return request(app)
-          .delete('/upload/' + attachmentId)
+          .delete('/admin/upload/' + attachmentId)
           .expect(400)
       })
 
@@ -246,7 +246,7 @@ describe('Routing upload request', function () {
         findByIdStub.resolves(null)
 
         return request(app)
-          .delete('/upload/' + attachmentId)
+          .delete('/admin/upload/' + attachmentId)
           .expect(404)
       })
     })
