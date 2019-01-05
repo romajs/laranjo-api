@@ -1,6 +1,8 @@
-#! /usr/bin/env node
+var makeRunnable = require('make-runnable/custom')
 
-var server = require('./src/server')
+var server = require('./server')
+
+makeRunnable({ printOutputFrame: false })
 
 function startServer () {
   return server.start().then(function (servers) {
@@ -18,7 +20,3 @@ module.exports = {
   'start-server': startServer,
   'stop-server': stopServer
 }
-
-require('make-runnable/custom')({
-  printOutputFrame: false
-})

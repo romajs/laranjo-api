@@ -4,6 +4,7 @@
   "description": "Laranjo API",
   "author": "@romajs",
   "license": "MIT",
+  "main": "src/index",
   "private": true,
   "repository": {
     "type": "git",
