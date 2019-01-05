@@ -1,4 +1,4 @@
-version: '2'
+version: '3'
 services:
   cloudinary:
     image: romajs/cloudinary-mock:latest
@@ -6,11 +6,12 @@ services:
       - "9080:9080"
       - "9443:9443"
   mongodb:
-    image: mongo:3.6.4-jessie
+    image: mongo:latest
     ports:
       - "27017:27017"
   web:
-    build: .
+    image: node:dubnium
+    command: npm run start:dev
     environment:
       ADMIN_BASE_PATH: /admin
       ADMIN_UPLOAD_MAX_FILE_SIZE: 2MB
@@ -31,3 +32,4 @@ services:
     restart: "on-failure"
     volumes:
       - ./:/app
+    working_dir: /app
