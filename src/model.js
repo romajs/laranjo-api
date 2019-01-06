@@ -1,7 +1,7 @@
-var mongoose = require('mongoose')
-var Schema = mongoose.Schema
+const mongoose = require('mongoose')
+const Schema = mongoose.Schema
 
-var AttachmentSchema = new Schema({
+const AttachmentSchema = new Schema({
   name: String,
   type: String,
   size: Number,
@@ -17,7 +17,7 @@ var AttachmentSchema = new Schema({
   tags: [String]
 })
 
-var Attachment = mongoose.model('Attachment', AttachmentSchema)
+const Attachment = mongoose.model('Attachment', AttachmentSchema)
 
 module.exports = {
   Attachment,

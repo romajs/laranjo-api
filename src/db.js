@@ -1,27 +1,25 @@
-var mongoose = require('mongoose')
+const mongoose = require('mongoose')
 
-var config = require('./config')
-var logger = require('./logger')
+const config = require('./config')
+const logger = require('./logger')
 
-var client = null
+let client = null
 
-function connect () {
-  return new Promise(function (resolve, reject) {
-    client = mongoose.connect(config.get('mongodb.uri'))
-    mongoose.connection.on('error', function (err) {
-      logger.error(err)
-      reject(err)
-    })
-    mongoose.connection.once('open', function () {
-      logger.info('MongoDB/mongoose connected successfully')
-      resolve(mongoose.connection)
-    })
+const connect = () => new Promise(function (resolve, reject) {
+  client = mongoose.connect(config.get('mongodb.uri'))
+
+  mongoose.connection.on('error', function (err) {
+    logger.error(err)
+    reject(err)
   })
-}
 
-function disconnect () {
-  return client.disconnect()
-}
+  mongoose.connection.once('open', function () {
+    logger.info('MongoDB/mongoose connected successfully')
+    resolve(mongoose.connection)
+  })
+})
+
+const disconnect = () => client.disconnect()
 
 mongoose.Promise = global.Promise
 

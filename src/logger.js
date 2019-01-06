@@ -1,8 +1,7 @@
-var winston = require('winston')
+const { Logger } = require('winston')
 
-var util = require('./util')
+const misc = require('./misc')
 
-var loggerOptions = util.getDefaultLoggerOptions()
-var logger = new (winston.Logger)(loggerOptions)
+const logger = new Logger(misc.winstonLogger.options())
 
 module.exports = logger
