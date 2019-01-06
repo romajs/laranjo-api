@@ -10,8 +10,8 @@ API for Google Hangouts Chat Bot contenplating `@Laranjo` memes.
 
 [![js-standard-style](https://img.shields.io/badge/code%20style-standard-brightgreen.svg)](http://standardjs.com)
 
-[![node](https://img.shields.io/badge/node-6.14.2-yellow.svg)](https://nodejs.org/en/blog/release/v6.14.2/)
-[![npm](https://img.shields.io/badge/npm-3.10.10-yellow.svg)](https://github.com/npm/npm/releases/tag/v3.10.10)
+[![node](https://img.shields.io/badge/node-10.15.0-brightgreen.svg)](https://nodejs.org/en/blog/release/v10.15.0/)
+[![npm](https://img.shields.io/badge/npm-6.4.1-brightgreen.svg)](https://github.com/npm/cli/releases/tag/v6.4.1)
 
 [![Run in Postman](https://run.pstmn.io/button.svg)](https://app.getpostman.com/run-collection/65a494c6277d4e451080)
 
@@ -29,11 +29,13 @@ API for Google Hangouts Chat Bot contenplating `@Laranjo` memes.
 * MongoDB
 * Cloudinary (Resurce/Image Upload)
 
-### Test
+### Git hooks
 
-This project is configurated with **pre-commit** npm module.  
-Every commit will trigger the **npm scripts** configurated at ***pre-commit*** section in ***package.json***.  
-To avoid this, you can use the `--no-verify` flag when creating a new commit.  
+This project use **husky** npm module to manage git hooks.
+Please see **husky** configuration under `package.json`file.
+To avoid git hooks execution you can use the `--no-verify` flag.
+
+### Test
 
 All tests are unitary api level, and done with **mocha** and **sinnon** npm modules.  
 
