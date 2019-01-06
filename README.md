@@ -3,10 +3,11 @@
 API for Google Hangouts Chat Bot contenplating `@Laranjo` memes.
 
 [![CircleCI](https://img.shields.io/circleci/project/github/romajs/laranjo-api.svg)](https://circleci.com/gh/romajs/laranjo-api)
-[![Codecov](https://img.shields.io/codecov/c/github/romajs/laranjo-api.svg)](https://codecov.io/gh/romajs/laranjo-api)
+[![codecov](https://codecov.io/gh/romajs/laranjo-api/branch/master/graph/badge.svg)](https://codecov.io/gh/romajs/laranjo-api)
 [![Maintainability](https://api.codeclimate.com/v1/badges/3a975d6c0360ac841545/maintainability)](https://codeclimate.com/github/romajs/laranjo-api/maintainability)
 [![Test Coverage](https://api.codeclimate.com/v1/badges/3a975d6c0360ac841545/test_coverage)](https://codeclimate.com/github/romajs/laranjo-api/test_coverage)
 [![js-standard-style](https://img.shields.io/badge/code%20style-standard-brightgreen.svg)](http://standardjs.com)
+[![MIT Licence](https://badges.frapsoft.com/os/mit/mit.svg?v=103)](https://opensource.org/licenses/mit-license.php)
 
 [![node](https://img.shields.io/badge/node-10.15.0-brightgreen.svg)](https://nodejs.org/en/blog/release/v10.15.0/)
 [![npm](https://img.shields.io/badge/npm-6.4.1-brightgreen.svg)](https://github.com/npm/cli/releases/tag/v6.4.1)
