@@ -4,14 +4,15 @@ API for Google Hangouts Chat Bot contenplating `@Laranjo` memes.
 
 [![CircleCI](https://img.shields.io/circleci/project/github/romajs/laranjo-api.svg)](https://circleci.com/gh/romajs/laranjo-api)
 [![Codecov](https://img.shields.io/codecov/c/github/romajs/laranjo-api.svg)](https://codecov.io/gh/romajs/laranjo-api)
-
-[![dependencies](https://david-dm.org/romajs/laranjo-api.svg)](https://david-dm.org/romajs/laranjo-api)
-[![devDependencies](https://david-dm.org/romajs/laranjo-api/dev-status.svg)](https://david-dm.org/romajs/laranjo-api?type=dev)
-
+[![Maintainability](https://api.codeclimate.com/v1/badges/3a975d6c0360ac841545/maintainability)](https://codeclimate.com/github/romajs/laranjo-api/maintainability)
+[![Test Coverage](https://api.codeclimate.com/v1/badges/3a975d6c0360ac841545/test_coverage)](https://codeclimate.com/github/romajs/laranjo-api/test_coverage)
 [![js-standard-style](https://img.shields.io/badge/code%20style-standard-brightgreen.svg)](http://standardjs.com)
 
 [![node](https://img.shields.io/badge/node-10.15.0-brightgreen.svg)](https://nodejs.org/en/blog/release/v10.15.0/)
 [![npm](https://img.shields.io/badge/npm-6.4.1-brightgreen.svg)](https://github.com/npm/cli/releases/tag/v6.4.1)
+[![dependencies](https://david-dm.org/romajs/laranjo-api.svg)](https://david-dm.org/romajs/laranjo-api)
+[![devDependencies](https://david-dm.org/romajs/laranjo-api/dev-status.svg)](https://david-dm.org/romajs/laranjo-api?type=dev)
+
 
 [![Run in Postman](https://run.pstmn.io/button.svg)](https://app.getpostman.com/run-collection/65a494c6277d4e451080)
 
