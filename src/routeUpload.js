@@ -1,41 +1,39 @@
-var basicAuth = require('basic-auth')
-var bytes = require('bytes')
-var cloudinary = require('cloudinary')
-var formidable = require('formidable')
+const basicAuth = require('basic-auth')
+const bytes = require('bytes')
+const cloudinary = require('cloudinary')
+const express = require('express')
+const formidable = require('formidable')
 
-var express = require('express')
-var router = express.Router()
-
-var config = require('./config')
-var logger = require('./logger')
-var model = require('./model')
+const config = require('./config')
+const logger = require('./logger')
+const model = require('./model')
 
 cloudinary.config(config.get('cloudinary'))
 
-function formatFile (file) {
-  var format = [
-    `name="${file.name}"`,
-    `path="${file.path}"`,
-    `type="${file.type}"`,
-    `size=${file.size && bytes(file.size)} bytes`,
-    `hash="${file.size && file.hash}"`,
-    `lastModifiedDate="${file.size && file.lastModifiedDate}"`
-  ]
-  return format.join(', ')
-}
+const formatFile = (file) => [
+  `name="${file.name}"`,
+  `path="${file.path}"`,
+  `type="${file.type}"`,
+  `size=${file.size && bytes(file.size)} bytes`,
+  `hash="${file.size && file.hash}"`,
+  `lastModifiedDate="${file.size && file.lastModifiedDate}"`
+].join(', ')
 
-router.use(function (req, res, next) {
+const router = express.Router()
+
+router.use((req, res, next) => {
   if (config.get('admin.auth.enabled')) {
-    var auth = basicAuth(req)
-    if (auth === undefined || (auth.name !== config.get('admin.auth.username') && auth.pass !== config.get('admin.auth.password'))) {
+    const auth = basicAuth(req)
+    const [username, password] = [config.get('admin.auth.username'), config.get('admin.auth.password')]
+    if (auth === undefined || (auth.name !== username || auth.pass !== password)) {
       return res.status(401).end()
     }
   }
   return next()
 })
 
-router.get('/upload', function (req, res, next) {
-  return model.Attachment.find(req.query).then(function (attachments) {
+router.get('/upload', (req, res, next) => {
+  return model.Attachment.find(req.query).then((attachments) => {
     if (attachments.length === 0) {
       return res.status(204).end()
     } else {
@@ -44,8 +42,8 @@ router.get('/upload', function (req, res, next) {
   })
 })
 
-router.post('/upload', function (req, res, next) {
-  var form = new formidable.IncomingForm()
+router.post('/upload', (req, res, next) => {
+  const form = new formidable.IncomingForm()
 
   form.encoding = 'utf-8'
   form.hash = 'md5'
@@ -55,47 +53,46 @@ router.post('/upload', function (req, res, next) {
   form.type = 'multipart'
   form.uploadDir = '/tmp'
 
-  form.on('field', function (name, value) {
+  form.on('field', (name, value) => {
     logger.debug(`received field: name="${name}", value="${value}"`)
   })
 
-  form.on('fileBegin', function (name, file) {
+  form.on('fileBegin', (name, file) => {
     logger.debug(`receiving file: ${formatFile(file)}`)
   })
 
-  form.on('file', function (name, file) {
+  form.on('file', (name, file) => {
     logger.debug(`received file: ${formatFile(file)}`)
   })
 
-  form.on('progress', function (recv, total) {
-    var progress = Number(recv / total * 100).toFixed(2)
+  form.on('progress', (recv, total) => {
+    const progress = Number(recv / total * 100).toFixed(2)
     logger.silly(`progress: ${progress}% (${bytes(recv)})`)
   })
 
-  form.parse(req, function (err, fields, files) {
+  form.parse(req, (err, fields, files) => {
     if (err) {
       return next(err)
     }
 
-    var file = files.file
+    const file = files.file
 
     if (!file) {
       logger.debug('No file attached.')
       return res.status(400).end()
     }
 
-    var tags = fields.tags ? fields.tags.split(',').map(s => s.trim()) : []
-
+    const tags = fields.tags ? fields.tags.split(',').map(s => s.trim()) : []
     logger.debug(`uploading file: ${formatFile(file)}, tags="${tags}"`)
 
-    function cloudinaryCallback (cloudinaryResult) {
+    return cloudinary.uploader.upload(file.path, (cloudinaryResult) => {
       logger.debug('cloudinaryResult:', cloudinaryResult)
 
       if (!cloudinaryResult || cloudinaryResult.error) {
         return next(cloudinaryResult.error)
       }
 
-      var attachment = new model.Attachment({
+      const attachment = new model.Attachment({
         name: file.name,
         type: [cloudinaryResult.resource_type, cloudinaryResult.format].join('/'),
         size: cloudinaryResult.bytes,
@@ -107,35 +104,33 @@ router.post('/upload', function (req, res, next) {
 
       logger.silly('new attachment="%j"', attachment)
 
-      return attachment.save().then(function (attachment) {
+      return attachment.save().then((attachment) => {
         return res.status(200).json(attachment)
-      }).catch(function (err) {
+      }).catch((err) => {
         return next(err)
       })
-    }
-
-    return cloudinary.uploader.upload(file.path, cloudinaryCallback)
+    })
   })
 })
 
-router.delete('/upload/:id', function (req, res, next) {
+router.delete('/upload/:id', (req, res, next) => {
   req.checkParams('id').isObjectId()
 
-  req.getValidationResult().then(function (result) {
+  req.getValidationResult().then((result) => {
     if (!result.isEmpty()) {
       return res.status(400).json(result.array())
     }
-  }).then(function () {
-    return model.Attachment.findById(req.params.id).then(function (attachment) {
+  }).then(() => {
+    return model.Attachment.findById(req.params.id).then((attachment) => {
       logger.debug('found attachment="%j"', attachment)
 
       if (attachment === null) {
         return res.status(404).end()
       }
 
-      return attachment.remove().then(function () {
+      return attachment.remove().then(() => {
         return res.status(204).end()
-      }).catch(function (err) {
+      }).catch((err) => {
         return next(err)
       })
     })

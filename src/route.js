@@ -1,34 +1,36 @@
-var express = require('express')
-var router = express.Router()
+const express = require('express')
 
-var logger = require('./logger')
-var routeEventHandler = require('./routeEventHandler')
+const logger = require('./logger')
+const config = require('./config')
+const routeEventHandler = require('./routeEventHandler')
 
-var config = require('./config')
+const router = express.Router()
 
-router.use(function (req, res, next) {
-  if (config.get('googleHangoutsChat.auth.enabled') === true && req.body.token !== config.get('googleHangoutsChat.auth.token')) {
+router.use((req, res, next) => {
+  const authEnabled = config.get('googleHangoutsChat.auth.enabled')
+  const token = config.get('googleHangoutsChat.auth.token')
+  if (authEnabled === true && req.body.token !== token) {
     return res.status(401).end()
   }
   return next()
 })
 
-router.get('/', function (req, res, next) {
+router.get('/', (req, res, next) => {
   return res.end('VO TI DA U SHUTI')
 })
 
-router.post('/', function (req, res, next) {
+router.post('/', (req, res, next) => {
   logger.silly('Request body:', req.body)
 
   req.checkBody('type', 'required').notEmpty()
 
-  return req.getValidationResult().then(function (result) {
+  return req.getValidationResult().then((result) => {
     if (!result.isEmpty()) {
       return res.status(400).json(result.array())
     }
-  }).then(function () {
-    var type = req.body.type
-    var handler = routeEventHandler(type)
+  }).then(() => {
+    const type = req.body.type
+    const handler = routeEventHandler(type)
 
     if (handler.validate === undefined) {
       return handler.buildResponse(req, res, next)

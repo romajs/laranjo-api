@@ -1,22 +1,19 @@
-var makeRunnable = require('make-runnable/custom')
+const makeRunnable = require('make-runnable/custom')
 
-var server = require('./server')
+const server = require('./server')
 
-makeRunnable({ printOutputFrame: false })
+const startServer = () => server.start().then((servers) => {
+  return `Server started successfully @ ${servers[1]._connectionKey}`
+})
 
-function startServer () {
-  return server.start().then(function (servers) {
-    return 'Server started successfully @ ' + servers[0]._connectionKey
-  })
-}
-
-function stopServer () {
-  return server.stop().then(function (servers) {
-    return 'Server stoped successfully @ ' + servers[0]._connectionKey
-  })
-}
+const stopServer = () => server.stop().then((servers) => {
+  return `Server stoped successfully @ ${servers[1]._connectionKey}`
+})
 
 module.exports = {
   'start-server': startServer,
   'stop-server': stopServer
 }
+
+// makeRunnable must be called after module.exports
+makeRunnable({ printOutputFrame: false })

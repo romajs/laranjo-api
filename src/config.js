@@ -1,6 +1,6 @@
-var convict = require('convict')
+const convict = require('convict')
 
-var config = convict({
+const config = convict({
   env: {
     format: ['production', 'development', 'test'],
     env: 'NODE_ENV'
