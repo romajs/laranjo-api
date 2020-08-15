@@ -6,17 +6,17 @@
 [![codecov](https://codecov.io/gh/romajs/laranjo-api/branch/master/graph/badge.svg)](https://codecov.io/gh/romajs/laranjo-api)
 [![Maintainability](https://api.codeclimate.com/v1/badges/3a975d6c0360ac841545/maintainability)](https://codeclimate.com/github/romajs/laranjo-api/maintainability)
 [![Test Coverage](https://api.codeclimate.com/v1/badges/3a975d6c0360ac841545/test_coverage)](https://codeclimate.com/github/romajs/laranjo-api/test_coverage)
-[![js-standard-style](https://img.shields.io/badge/code%20style-standard-brightgreen.svg)](http://standardjs.com)
 
+[![js-standard-style](https://img.shields.io/badge/code%20style-standard-brightgreen.svg)](http://standardjs.com)
 [![node](https://img.shields.io/badge/node-v10-yellow.svg)](https://nodejs.org/en/blog/release/v10.15.0/)
 [![npm](https://img.shields.io/badge/npm-v6-green.svg)](https://github.com/npm/cli/releases/tag/v6.4.1)
 ![Requires.io](https://img.shields.io/requires/github/romajs/laranjo-api)
 
+[![Run in Postman](https://run.pstmn.io/button.svg)](https://app.getpostman.com/run-collection/65a494c6277d4e451080)
+
 ## Description
 
 API for Google Hangouts Chat Bot contemplating `@Laranjo` memes.
-
-[![Run in Postman](https://run.pstmn.io/button.svg)](https://app.getpostman.com/run-collection/65a494c6277d4e451080)
 
 ## Development
 
@@ -109,6 +109,10 @@ npm install -g npm-check-updates
 ncu -u
 npm i
 ```
+
+## Documentation
+
+- [Postmant collection](./docs/laranjo-api.postman_collection.json)
 
 ---
 
