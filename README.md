@@ -1,19 +1,20 @@
 # laranjo-api
 
-API for Google Hangouts Chat Bot contenplating `@Laranjo` memes.
 
+![GitHub](https://img.shields.io/github/license/romajs/laranjo-api)
 [![CircleCI](https://img.shields.io/circleci/project/github/romajs/laranjo-api.svg)](https://circleci.com/gh/romajs/laranjo-api)
 [![codecov](https://codecov.io/gh/romajs/laranjo-api/branch/master/graph/badge.svg)](https://codecov.io/gh/romajs/laranjo-api)
 [![Maintainability](https://api.codeclimate.com/v1/badges/3a975d6c0360ac841545/maintainability)](https://codeclimate.com/github/romajs/laranjo-api/maintainability)
 [![Test Coverage](https://api.codeclimate.com/v1/badges/3a975d6c0360ac841545/test_coverage)](https://codeclimate.com/github/romajs/laranjo-api/test_coverage)
 [![js-standard-style](https://img.shields.io/badge/code%20style-standard-brightgreen.svg)](http://standardjs.com)
-[![MIT Licence](https://badges.frapsoft.com/os/mit/mit.svg?v=103)](https://opensource.org/licenses/mit-license.php)
 
-[![node](https://img.shields.io/badge/node-10.15.0-brightgreen.svg)](https://nodejs.org/en/blog/release/v10.15.0/)
-[![npm](https://img.shields.io/badge/npm-6.4.1-brightgreen.svg)](https://github.com/npm/cli/releases/tag/v6.4.1)
-[![dependencies](https://david-dm.org/romajs/laranjo-api.svg)](https://david-dm.org/romajs/laranjo-api)
-[![devDependencies](https://david-dm.org/romajs/laranjo-api/dev-status.svg)](https://david-dm.org/romajs/laranjo-api?type=dev)
+[![node](https://img.shields.io/badge/node-v10-yellow.svg)](https://nodejs.org/en/blog/release/v10.15.0/)
+[![npm](https://img.shields.io/badge/npm-v6-green.svg)](https://github.com/npm/cli/releases/tag/v6.4.1)
+![Requires.io](https://img.shields.io/requires/github/romajs/laranjo-api)
 
+## Description
+
+API for Google Hangouts Chat Bot contemplating `@Laranjo` memes.
 
 [![Run in Postman](https://run.pstmn.io/button.svg)](https://app.getpostman.com/run-collection/65a494c6277d4e451080)
 
@@ -108,3 +109,7 @@ npm install -g npm-check-updates
 ncu -u
 npm i
 ```
+
+---
+
+romajs - 2018
